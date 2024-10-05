@@ -1,0 +1,11 @@
+.card {
+    color: #290661;
+}
+
+.new-card {
+    cursor: pointer;
+}
+
+.modal {
+    /*opacity: 50%;*/
+}
