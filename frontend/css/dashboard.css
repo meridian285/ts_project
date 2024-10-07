@@ -24,3 +24,16 @@ main{
 .text-purple-dark {
     color: #290661;
 }
+
+.logo {
+    width: 98px;
+    height: 40px;
+}
+
+.dashboard {
+    width: 219px;
+}
+
+.balance-text {
+    font-weight: bold;
+}
