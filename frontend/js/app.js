@@ -4,6 +4,7 @@ const menuDropdown = document.querySelectorAll('.menu-dropdown-item');
 const listMainMenu = document.querySelectorAll('.main-menu-item');
 const selectInterval = document.querySelectorAll('.select-interval');
 const categories = document.getElementById('categories');
+const dropdownMenuElement = document.getElementById('dropdown-li');
 
 //Поворот стрелки при выборе меню аккордеона
 menuDropdownLinkElement.onclick = () => {
@@ -33,6 +34,8 @@ listMainMenu.forEach(item => {
         }
 
         if (event.target.id === 'menu-dropdown-link') {
+            dropdownMenuElement.style.borderColor = '#0D6EFD';
+
             if (event.target.classList.contains('collapsed')) {
                 event.target.style.borderBottomLeftRadius = '5px';
                 event.target.style.borderBottomRightRadius = '5px';
@@ -40,7 +43,10 @@ listMainMenu.forEach(item => {
                 event.target.style.borderBottomLeftRadius = '0';
                 event.target.style.borderBottomRightRadius = '0';
             }
+
         } else {
+            dropdownMenuElement.style.borderColor = 'transparent';
+
             if (menuDropdownLinkElement.classList.contains('collapsed') && categories.classList.contains('show')) {
                 arrowElement.style.transform = 'rotate(90deg)';
             } else {
