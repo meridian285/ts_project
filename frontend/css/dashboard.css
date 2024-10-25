@@ -31,25 +31,17 @@
 
 .dashboard {
     width: 219px;
-    min-height: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
 }
 
 .balance-text {
     font-weight: bold;
 }
 
-.diagrams {
-    margin-top: 140px;
-}
-
-.diagram {
-    width: 437px;
-    height: 467px;
-    margin: 0 84px 0 86px;
-}
-
 .nav-link {
-    /*color: #052C65;*/
     color: #052C65;
 }
 
@@ -101,4 +93,8 @@
 .dropdown-li {
     border: 1px solid transparent;
     border-radius: 7px;
+}
+
+.content {
+    margin-left: 219px;
 }

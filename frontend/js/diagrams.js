@@ -3,6 +3,8 @@ let incomeData = [12, 19, 3, 5, 20, 3]
 
 new Chart(incomeDiagram, {
     type: 'pie',
+    responsive: true,
+    maintainAspectRatio: false,
     data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [{
@@ -12,11 +14,7 @@ new Chart(incomeDiagram, {
         }]
     },
     options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        },
+
         plugins: {
             title: {
                 display: true,
@@ -35,6 +33,7 @@ const expensesData = [12, 19, 3, 5, 20, 3];
 
 new Chart(expensesDiagram, {
     type: 'pie',
+    responsive: true,
     data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [{
@@ -45,11 +44,7 @@ new Chart(expensesDiagram, {
     },
     options: {
         responsive: true,
-        scales: {
-            y: {
-                beginAtZero: true
-            },
-        },
+
         plugins: {
             title: {
                 display: true,

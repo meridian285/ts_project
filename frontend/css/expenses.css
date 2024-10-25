@@ -13,5 +13,8 @@
 
 .card {
     width: 352px;
-    height: 121px;
+    min-height: 121px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
