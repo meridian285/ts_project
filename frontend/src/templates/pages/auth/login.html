@@ -1,21 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/login.css">
-    <title>Document</title>
-</head>
-<body>
-
 <section class="d-flex section vh-100 container-sm d-flex align-items-center justify-content-center">
     <main>
         <form class="form">
             <div class="text-center ">
-                <img class="logo" src="../images/Logo.png" alt="Логотип">
+                <img class="logo_auth" src="../images/Logo.png" alt="Логотип">
             </div>
             <h1 class="h3 mb-3 fw-normal text-center text-primary-emphasis fs-1 fw-medium">Вход</h1>
 
@@ -24,6 +11,7 @@
                     <img src="../images/mail.svg" alt="иконка почты">
                 </span>
                 <input type="email" class="form-control" id="emailInput" placeholder="Электронная почта">
+                <span class="error invalid-feedback" id="emailInput-error">Заполните поле email'</span>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">
@@ -34,6 +22,7 @@
                     </svg>
                 </span>
                 <input type="password" class="form-control" id="passwordInput" placeholder="Пароль">
+                <span class="error invalid-feedback" id="passwordInput-error">Заполните поле пароль</span>
             </div>
 
             <div class="form-check text-start my-3">
@@ -42,14 +31,8 @@
                     Запомнить меня
                 </label>
             </div>
-            <button class="btn btn-primary w-100 py-2" type="button">Войти</button>
-            <p class="mt-1 mb-3 text-body-secondary">Еще нет аккаунта? <a href="#">Пройти регистрацию</a></p>
+            <button class="btn btn-primary w-100 py-2" type="button" id="process-button">Войти</button>
+            <p class="mt-1 mb-3 text-body-secondary">Еще нет аккаунта? <a href="/sign-up">Пройти регистрацию</a></p>
         </form>
     </main>
 </section>
-
-
-<script src="../js/bootstrap.min.js"></script>
-
-</body>
-</html>
