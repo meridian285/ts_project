@@ -28,7 +28,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/auth/login.html',
                 useLayout: false,
                 load: () => {
-                    new Login();
+                    new Login(this.openNewRoute.bind(this));
                 },
                 styles: ['auth.css'],
             },
@@ -75,10 +75,16 @@ export class Router {
     initEvents() {
         window.addEventListener('DOMContentLoaded', this.activateRoute.bind(this));
         window.addEventListener('popstate', this.activateRoute.bind(this));
-        document.addEventListener('click', this.openNewRoute.bind(this));
+        document.addEventListener('click', this.clickHandler.bind(this));
     }
 
-    async openNewRoute(e) {
+    async openNewRoute(url) {
+        const currentRout = window.location.pathname;
+        history.pushState({}, '', url)
+        await this.activateRoute(null, currentRout)
+    }
+
+    async clickHandler(e) {
         let element = null;
         if (e.target.nodeName === 'A') {
             element = e.target;
@@ -89,22 +95,13 @@ export class Router {
         if (element) {
             e.preventDefault();
 
-            const currentRout = window.location.pathname;
-
             const url = element.href.replace(window.location.origin, '');
             if (!url || url === '/#' || url.startsWith('javascript:void(0)')) {
                 return
             }
 
-
-            history.pushState({}, '', url)
-            await this.activateRoute(null, currentRout)
+            await this.openNewRoute(url);
         }
-        // else {
-        //     console.log('ОШИБКА! Страница не найдена! Вас перенаправит на стартовую страницу!')
-        //     history.pushState({}, '', '/');
-        // }
-
     }
 
     async activateRoute(e, oldRoute = null) {
