@@ -1,9 +1,11 @@
-import {Dashboard} from "./components/dashboard";
-import {Login} from "./components/login";
-import {SignUp} from "./components/signup";
-import {IncomeAndExpenses} from "./components/income-and-expenses";
-import {Income} from "./components/income";
-import {Expenses} from "./components/expenses";
+import {Dashboard} from "./components/dashboard/dashboard";
+import {Login} from "./components/auth/login";
+import {SignUp} from "./components/auth/signup";
+import {IncomeAndExpenses} from "./components/income-and-expenses/income-and-expenses";
+import {Income} from "./components/income/income";
+import {Expenses} from "./components/expenses/expenses";
+import {Logout} from "./components/auth/logout";
+import {EXPENSES, INCOME, INCOME_AND_EXPENSES, LOGIN, LOGOUT, SIGNUP} from "../config/config";
 
 export class Router {
     constructor() {
@@ -23,7 +25,7 @@ export class Router {
                 }
             },
             {
-                route: '/login',
+                route: LOGIN,
                 title: 'Авторизация',
                 filePathTemplate: '/templates/pages/auth/login.html',
                 useLayout: false,
@@ -33,17 +35,23 @@ export class Router {
                 styles: ['auth.css'],
             },
             {
-                route: '/sign-up',
+                route: SIGNUP,
                 title: 'Регистрация',
                 filePathTemplate: '/templates/pages/auth/signup.html',
                 useLayout: false,
                 load: () => {
-                    new SignUp();
+                    new SignUp(this.openNewRoute.bind(this));
                 },
                 styles: ['auth.css'],
             },
             {
-                route: '/income-and-expenses',
+                route: LOGOUT,
+                load: () => {
+                    new Logout(this.openNewRoute.bind(this));
+                }
+            },
+            {
+                route: INCOME_AND_EXPENSES,
                 title: 'Доходы и расходы',
                 filePathTemplate: '/templates/pages/income-and-expenses/income-and-expenses.html',
                 useLayout: '/templates/layout.html',
@@ -52,7 +60,7 @@ export class Router {
                 }
             },
             {
-                route: '/expenses',
+                route: EXPENSES,
                 title: 'Расходы',
                 filePathTemplate: '/templates/pages/expenses/expenses.html',
                 useLayout: '/templates/layout.html',
@@ -61,7 +69,7 @@ export class Router {
                 }
             },
             {
-                route: '/income',
+                route: INCOME,
                 title: 'Доходы',
                 filePathTemplate: '/templates/pages/income/income.html',
                 useLayout: '/templates/layout.html',

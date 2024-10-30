@@ -5,21 +5,21 @@
                 <img class="logo_auth" src="../images/Logo.png" alt="Логотип">
             </div>
             <h1 class="h3 mb-3 fw-normal text-center text-primary-emphasis fs-1 fw-medium">Создайте аккаунт</h1>
-
+            <div class="error invalid-feedback text-center mb-3" id="common-error">Не удалось зарегистрировать пользователя</div>
             <div class="input-group mb-3">
                 <span class="input-group-text"><img src="./images/person.svg" alt="ФИО"></span>
-                <input type="email" class="form-control" id="nameInput" placeholder="ФИО">
+                <input type="email" class="form-control" id="fullNameInput" placeholder="ФИО">
                 <span class="error invalid-feedback" id="nameInput-error">Заполните поле ФИО</span>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text"><img src="./images/mail.svg" alt="иконка почты"></span>
                 <input type="email" class="form-control" id="emailInput" placeholder="Электронная почта">
-                <span class="error invalid-feedback" id="emailInput-error">Заполните поле email'</span>
+                <span class="error invalid-feedback" id="emailInput-error">Заполните поле email</span>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text"><img src="./images/lock.svg" alt="иконка пароля"></span>
                 <input type="password" class="form-control" id="passwordInput" placeholder="Пароль">
-                <span class="error invalid-feedback" id="passwordInput-error">Заполните поле пароль'</span>
+                <span class="error invalid-feedback" id="passwordInput-error">Заполните поле пароль</span>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text"><img src="./images/lock.svg" alt="иконка пароля"></span>
@@ -27,7 +27,7 @@
                 <span class="error invalid-feedback" id="repeatPasswordInput-error">Пароли не совпадают'</span>
             </div>
 
-            <button class="btn btn-primary w-100 py-2" type="button">Войти</button>
+            <button class="btn btn-primary w-100 py-2" type="button" id="process-button">Войти</button>
             <p class="mt-1 mb-3 text-body-secondary">Уже есть аккаунт? <a href="/login">Войдите в систему</a></p>
         </form>
     </main>

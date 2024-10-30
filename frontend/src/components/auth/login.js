@@ -1,9 +1,14 @@
-import {Auth} from "../service/auth";
-import config from "../../config/config";
+import {AuthUtils} from "../../utils/auth-utils";
+import config, {LOGIN, POST} from "../../../config/config";
+import {HttpUtils} from "../../utils/http-utils";
 
 export class Login {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
+
+        if (AuthUtils.getAuthInfo(AuthUtils.accessTokenKey)) {
+            return this.openNewRoute('/');
+        }
 
         this.emailElement = document.getElementById('emailInput');
         this.passwordElement = document.getElementById('passwordInput');
@@ -36,33 +41,26 @@ export class Login {
     async login() {
         this.commonErrorElement.style.display = 'none';
         if (this.validateForm()) {
-            const response = await fetch(config.host + '/login', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: this.emailElement.value,
-                    password: this.passwordElement.value,
-                    rememberMe: this.rememberMeElement.checked,
-                })
+
+            const result = await HttpUtils.request(LOGIN, POST, {
+                email: this.emailElement.value,
+                password: this.passwordElement.value,
+                rememberMe: this.rememberMeElement.checked,
             });
 
-            const result = await response.json();
+            if (result.error || !result.response || (result.response && (!result.response.tokens.accessToken ||
+                !result.response.tokens.refreshToken || !result.response.user.id || !result.response.user.name))) {
 
-            if (result.error || !result.tokens.accessToken || !result.tokens.refreshToken || !result.user.id || !result.user.name) {
                 this.commonErrorElement.style.display = 'block';
                 return;
             }
 
             // сохраняем данные в localStorage
-            localStorage.setItem(Auth.accessTokenKey, result.tokens.accessToken);
-            localStorage.setItem(Auth.refreshTokenKey, result.tokens.refreshToken);
-            localStorage.setItem(Auth.userInfoKey, JSON.stringify({
-                id: result.user.id,
-                name: result.user.name,
-            }));
+            AuthUtils.setAuthInfo(result.response.tokens.accessToken, result.response.tokens.refreshToken, {
+                id: result.response.user.id,
+                name: result.response.user.name,
+                lastName: result.response.user.lastName,
+            });
 
             this.openNewRoute('/');
         }
