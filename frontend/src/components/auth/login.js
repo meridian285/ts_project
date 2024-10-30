@@ -1,5 +1,5 @@
 import {AuthUtils} from "../../utils/auth-utils";
-import config, {LOGIN, POST} from "../../../config/config";
+import {LOGIN, POST} from "../../../config/config";
 import {HttpUtils} from "../../utils/http-utils";
 
 export class Login {
@@ -10,41 +10,58 @@ export class Login {
             return this.openNewRoute('/');
         }
 
-        this.emailElement = document.getElementById('emailInput');
-        this.passwordElement = document.getElementById('passwordInput');
         this.rememberMeElement = document.getElementById('rememberMeChecked');
         this.commonErrorElement = document.getElementById('common-error');
+
+        this.fields = [
+            {
+                name: 'email',
+                id: 'emailInput',
+                element: null,
+                regex: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+                valid: false,
+            },
+            {
+                name: 'password',
+                id: 'passwordInput',
+                element: null,
+                valid: false,
+            }
+        ];
+        const that = this;
+        this.fields.forEach(item => {
+            item.element = document.getElementById(item.id);
+            item.element.addEventListener('change', (event) => {
+                that.validateField.call(that, item, event.target);
+            });
+        })
 
         document.getElementById('process-button').addEventListener('click', this.login.bind(this));
     }
 
+    validateField(field, element) {
+        if (!element.value || !element.value.match(field.regex)) {
+            element.classList.add('is-invalid');
+            field.valid = false;
+        } else {
+            element.classList.remove('is-invalid');
+            field.valid = true;
+        }
+        this.validateForm();
+    }
+
     validateForm() {
-        let isValid = true;
-
-        if (this.emailElement.value && this.emailElement.value.match(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)) {
-            this.emailElement.classList.remove('is-invalid');
-        } else {
-            this.emailElement.classList.add('is-invalid');
-            isValid = false;
-        }
-
-        if (this.passwordElement.value) {
-            this.passwordElement.classList.remove('is-invalid');
-        } else {
-            this.passwordElement.classList.add('is-invalid');
-            isValid = false;
-        }
-
-        return isValid;
+        return this.fields.every(item => item.valid);
     }
 
     async login() {
         this.commonErrorElement.style.display = 'none';
-        if (this.validateForm()) {
+        if (this.validateForm) {
 
             const result = await HttpUtils.request(LOGIN, POST, {
-                email: this.emailElement.value,
-                password: this.passwordElement.value,
+                // email: this.emailElement.value,
+                email: this.fields.find( field => field.id === 'emailInput').element.value,
+                password: this.fields.find( field => field.id === 'passwordInput').element.value,
                 rememberMe: this.rememberMeElement.checked,
             });
 

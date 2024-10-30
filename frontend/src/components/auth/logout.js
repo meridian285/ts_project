@@ -15,12 +15,12 @@ export class Logout {
 
     async logout() {
         await HttpUtils.request(LOGOUT, POST, {
-            refreshToken: localStorage.getItem(AuthUtils.refreshTokenKey)
+            refreshToken: AuthUtils.getAuthInfo(AuthUtils.refreshTokenKey)
         });
 
         //Удаляются из localStorage токены и инфо
         AuthUtils.removeAuthInfo();
 
-        this.openNewRoute('/login');
+        this.openNewRoute(LOGIN);
     }
 }
