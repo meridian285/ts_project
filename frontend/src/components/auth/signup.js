@@ -1,4 +1,4 @@
-import config, {LOGIN, POST, SIGNUP} from "../../../config/config";
+import {LOGIN, POST, SIGNUP} from "../../../config/config";
 import {AuthUtils} from "../../utils/auth-utils";
 import {HttpUtils} from "../../utils/http-utils";
 
@@ -16,51 +16,79 @@ export class SignUp {
         this.repeatPasswordElement = document.getElementById('repeatPasswordInput');
         this.commonErrorElement = document.getElementById('common-error');
 
+        this.fields = [
+            {
+                name: 'fullName',
+                id: 'fullNameInput',
+                element: null,
+                regex: /^([А-ЯЁ][а-яё]{1,23})\s([А-ЯЁ][а-яё]{1,23})$/,
+                valid: false,
+            },
+            {
+                name: 'email',
+                id: 'emailInput',
+                element: null,
+                regex: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+                valid: false,
+            },
+            {
+                name: 'password',
+                id: 'passwordInput',
+                element: null,
+                regex: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                valid: false,
+            },
+            {
+                name: 'password',
+                id: 'repeatPasswordInput',
+                element: null,
+                valid: false,
+            }
+        ];
+
+        const that = this;
+        this.fields.forEach(item => {
+            item.element = document.getElementById(item.id);
+            item.element.addEventListener('change', (event) => {
+                that.validateField.call(that, item, event.target);
+            });
+        });
+
         document.getElementById('process-button').addEventListener('click', this.signUp.bind(this));
     }
 
-    validateForm() {
-        let isValid = true;
-
-        //проверка поля ФИО
-        if (this.fullNameElement.value) {
-            this.fullNameElement.classList.remove('is-invalid');
+    validateField(field, element) {
+        if (!element.value || !element.value.match(field.regex)) {
+            element.classList.remove('is-valid');
+            element.classList.add('is-invalid');
+            field.valid = false;
         } else {
-            this.fullNameElement.classList.add('is-invalid');
-            isValid = false;
+            element.classList.remove('is-invalid');
+            element.classList.add('is-valid');
+            field.valid = true;
+
+            if (field.id === 'repeatPasswordInput') {
+                const repeatPasswordInput = this.fields.find(item => item.id === 'repeatPasswordInput');
+                const passwordInput = this.fields.find(item => item.id === 'passwordInput');
+                if (repeatPasswordInput.element.value !== '' && repeatPasswordInput.element.value === passwordInput.element.value) {
+                    element.classList.remove('is-invalid');
+                    element.classList.add('is-valid');
+                    field.valid = true;
+                } else {
+                    element.classList.remove('is-valid');
+                    element.classList.add('is-invalid');
+                    field.valid = false;
+                }
+            }
         }
 
-        //проверка почты
-        if (this.emailElement.value && this.emailElement.value.match(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)) {
-            this.emailElement.classList.remove('is-invalid');
-        } else {
-            this.emailElement.classList.add('is-invalid');
-            isValid = false;
-        }
-
-        // проверка пароля
-        if (this.passwordElement.value && this.passwordElement.value.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{6,})$/)) {
-            this.passwordElement.classList.remove('is-invalid');
-        } else {
-            this.passwordElement.classList.add('is-invalid');
-            isValid = false;
-        }
-
-        //проверка повторения пароля
-        if (this.repeatPasswordElement.value && this.repeatPasswordElement.value && this.passwordElement.value) {
-            this.passwordElement.classList.remove('is-invalid');
-        } else {
-            this.passwordElement.classList.add('is-invalid');
-            isValid = false;
-        }
-
-        return isValid;
+        return field.valid;
     }
 
     async signUp() {
         this.commonErrorElement.style.display = 'none';
         const arrayName = this.fullNameElement.value.split(' ');
-        if (this.validateForm()) {
+        if (this.validateField) {
             const result = await HttpUtils.request(SIGNUP, POST, {
                 name: arrayName[0],
                 lastName: arrayName[1],
@@ -83,27 +111,7 @@ export class SignUp {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
 
 
 // if (this.emailElement.value && this.emailElement.value.match(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)) {

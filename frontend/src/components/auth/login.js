@@ -47,16 +47,13 @@ export class Login {
             element.classList.remove('is-invalid');
             field.valid = true;
         }
-        this.validateForm();
-    }
 
-    validateForm() {
-        return this.fields.every(item => item.valid);
+        return field.valid;
     }
 
     async login() {
         this.commonErrorElement.style.display = 'none';
-        if (this.validateForm) {
+        if (this.validateField) {
 
             const result = await HttpUtils.request(LOGIN, POST, {
                 // email: this.emailElement.value,
