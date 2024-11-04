@@ -21,7 +21,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/dashboard.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Dashboard();
+                    new Dashboard(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -56,7 +56,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/income-and-expenses/income-and-expenses.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new IncomeAndExpenses();
+                    new IncomeAndExpenses(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -65,7 +65,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/expenses/expenses.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Expenses();
+                    new Expenses(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -74,7 +74,7 @@ export class Router {
                 filePathTemplate: '/templates/pages/income/income.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new Income();
+                    new Income(this.openNewRoute.bind(this));
                 }
             },
         ];

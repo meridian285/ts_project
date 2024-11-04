@@ -1,5 +1,6 @@
 export class Expenses {
-    constructor() {
+    constructor(openNewRoute) {
+        this.openNewRoute = openNewRoute;
 
     }
 }

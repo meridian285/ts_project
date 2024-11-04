@@ -14,3 +14,4 @@ export const DASHBOARD = '/dashboard';
 export const INCOME = '/income';
 export const EXPENSES = '/expenses';
 export const INCOME_AND_EXPENSES = '/income-and-expenses';
+export const BALANCE = '/balance';

@@ -1,7 +1,8 @@
-import config, {GET} from "../../config/config";
+import config, {GET, LOGIN} from "../../config/config";
+import {AuthUtils} from "./auth-utils";
 
 export class HttpUtils {
-    static async request(url, method = GET, body = null) {
+    static async request(url, method = GET, useAuth = true, body = null) {
 
         const result = {
             error: false,
@@ -15,6 +16,14 @@ export class HttpUtils {
                 'Accept': 'application/json',
             }
         };
+
+        let token = null;
+        if (useAuth) {
+            token = AuthUtils.getAuthInfo(AuthUtils.accessTokenKey);
+            if (token) {
+                params.headers['authorization'] = token;
+            }
+        }
 
         if (body) {
             params.body = JSON.stringify(body);
@@ -31,6 +40,12 @@ export class HttpUtils {
 
         if (response.status < 200 || response.status >= 300) {
             result.error = true;
+            if (useAuth && response.status === 401) {
+
+                if (!token) {
+                    result.redirect = LOGIN;
+                }
+            }
         }
 
         return  result;

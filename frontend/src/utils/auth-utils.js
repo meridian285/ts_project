@@ -1,3 +1,5 @@
+import config from "../../config/config";
+
 export class AuthUtils {
     static accessTokenKey = 'accessToken';
     static refreshTokenKey = 'refreshToken';
@@ -25,9 +27,5 @@ export class AuthUtils {
                 [this.userInfoKey]: localStorage.getItem(this.userInfoKey),
             }
         }
-    }
-
-    static async processUnauthorizedResponse() {
-
     }
 }

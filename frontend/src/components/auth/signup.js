@@ -58,6 +58,15 @@ export class SignUp {
     }
 
     validateField(field, element) {
+        if (field.id === 'fullNameInput') {
+            element.addEventListener('input', function () {
+                this.value = this.value.replace(/([A-Z][a-z])/g, '');
+                element.value = element.value.replace(/( |^)[а-яё]/g, (item) => {
+                    return item.toUpperCase();
+                })
+            })
+        }
+
         if (!element.value || !element.value.match(field.regex)) {
             element.classList.remove('is-valid');
             element.classList.add('is-invalid');
@@ -66,6 +75,14 @@ export class SignUp {
             element.classList.remove('is-invalid');
             element.classList.add('is-valid');
             field.valid = true;
+
+            if (field.id === 'fullNameInput') {
+                element.addEventListener('input', () => {
+                    element.value = element.value.replace(/( |^)[а-яёa-z]/g, (item) => {
+                        return item.toUpperCase();
+                    })
+                })
+            }
 
             if (field.id === 'repeatPasswordInput') {
                 const repeatPasswordInput = this.fields.find(item => item.id === 'repeatPasswordInput');
@@ -85,11 +102,17 @@ export class SignUp {
         return field.valid;
     }
 
+    toUpperCaseInput(element) {
+        element.value = element.value.replace(/( |^)[а-яёa-z]/g, (item) => {
+            return item.toUpperCase.bind(this);
+        })
+    };
+
     async signUp() {
         this.commonErrorElement.style.display = 'none';
         const arrayName = this.fullNameElement.value.split(' ');
         if (this.validateField) {
-            const result = await HttpUtils.request(SIGNUP, POST, {
+            const result = await HttpUtils.request(SIGNUP, POST, false, {
                 name: arrayName[0],
                 lastName: arrayName[1],
                 email: this.emailElement.value,

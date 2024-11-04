@@ -1,3 +1,4 @@
+
 const menuDropdownLinkElement = document.getElementById('menu-dropdown-link');
 const arrowElement = document.getElementById('arrow');
 const menuDropdown = document.querySelectorAll('.menu-dropdown-item');
@@ -7,17 +8,23 @@ const categories = document.getElementById('categories');
 const dropdownMenuElement = document.getElementById('dropdown-li');
 
 //Поворот стрелки при выборе меню аккордеона
-menuDropdownLinkElement.onclick = () => {
-    if (!menuDropdownLinkElement.classList.contains('collapsed')) {
-        arrowElement.style.transform = 'rotate(90deg)';
-    } else {
-        arrowElement.style.transform = 'rotate(0deg)';
-    }
-};
+// menuDropdownLinkElement.onclick = () => {
+//     if (!menuDropdownLinkElement.classList.contains('collapsed')) {
+//         arrowElement.style.transform = 'rotate(90deg)';
+//     } else {
+//         arrowElement.style.transform = 'rotate(0deg)';
+//     }
+// };
+
+document.querySelector('.menu').addEventListener('click', () => {
+    console.log('Yf;fk')
+})
+
 
 //Выбор пункта меню
 menuDropdown.forEach(item => {
     item.addEventListener('click', event => {
+        console.log(event.target)
         if (event) {
             menuDropdown.forEach(items => items.classList.remove('active'));
             item.classList.add('active');

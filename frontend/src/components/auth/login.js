@@ -55,7 +55,7 @@ export class Login {
         this.commonErrorElement.style.display = 'none';
         if (this.validateField) {
 
-            const result = await HttpUtils.request(LOGIN, POST, {
+            const result = await HttpUtils.request(LOGIN, POST, false, {
                 // email: this.emailElement.value,
                 email: this.fields.find( field => field.id === 'emailInput').element.value,
                 password: this.fields.find( field => field.id === 'passwordInput').element.value,

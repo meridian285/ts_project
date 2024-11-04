@@ -1,5 +1,6 @@
 export class Income {
-    constructor() {
+    constructor(openNewRoute) {
+        this.openNewRoute = openNewRoute;
 
     }
 }
