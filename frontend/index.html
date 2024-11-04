@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" id="bootstrap-styles" >
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/menu.js" defer></script>
+    <title id="title">Document</title>
+</head>
+<body>
+
+<div id="content">
+
+</div>
+
+<!--Модальное окно-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 pt-4 text-center fw-semibold">
+            <div class="modal-body fs-5">
+                Вы действительно хотите удалить категорию? Связанные доходы будут удалены навсегда.
+            </div>
+            <div class="modal-footer d-flex justify-content-center gap-2 pb-3 border-top-0">
+                <button type="button" class="btn btn-lg btn-success" >Да, удалять</button>
+                <button type="button" class="btn btn-lg btn-danger" data-bs-dismiss="modal">Не удалять</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="./js/chart.js"></script>
+<script src="./js/diagrams.js"></script>
+</body>
+
+</html>

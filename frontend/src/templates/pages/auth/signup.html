@@ -1,0 +1,34 @@
+<section class="section vh-100 container-sm d-flex align-items-center justify-content-center">
+    <main>
+        <form class="form" id="form" autocomplete="off">
+            <div class="text-center ">
+                <img class="logo_auth" src="../../images/Logo.png" alt="Логотип">
+            </div>
+            <h1 class="h3 mb-3 fw-normal text-center text-primary-emphasis fs-1 fw-medium">Создайте аккаунт</h1>
+            <div class="error invalid-feedback text-center mb-3" id="common-error">Не удалось зарегистрировать пользователя</div>
+            <div class="input-group mb-3">
+                <span class="input-group-text"><img src="../../../images/person.svg" alt="ФИО"></span>
+                <input type="text" class="form-control" id="fullNameInput" name="fullName" placeholder="ФИО" autocomplete="off">
+                <span class="error invalid-feedback" id="nameInput-error">Заполните поле ФИО</span>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text"><img src="../../../images/mail.svg" alt="иконка почты"></span>
+                <input type="email" class="form-control" id="emailInput" placeholder="Электронная почта" autocomplete="off">
+                <span class="error invalid-feedback" id="emailInput-error">Заполните поле email</span>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text"><img src="../../../images/lock.svg" alt="иконка пароля"></span>
+                <input type="password" class="form-control" id="passwordInput" placeholder="Пароль" autocomplete="new-password">
+                <span class="error invalid-feedback" id="passwordInput-error">пароль должен быть не менее 8 символов, содержать как минимум 1 букву в верхнем регистре и как минимум 1 цифру</span>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text"><img src="../../../images/lock.svg" alt="иконка пароля"></span>
+                <input type="password" class="form-control" id="repeatPasswordInput" placeholder="Подтверждение пароля" autocomplete="off">
+                <span class="error invalid-feedback" id="repeatPasswordInput-error">Пароли не совпадают</span>
+            </div>
+
+            <button class="btn btn-primary w-100 py-2" type="button" id="process-button">Регистрация</button>
+            <p class="mt-1 mb-3 text-body-secondary">Уже есть аккаунт? <a href="/login">Войдите в систему</a></p>
+        </form>
+    </main>
+</section>
