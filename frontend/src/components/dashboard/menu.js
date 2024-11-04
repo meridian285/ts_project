@@ -7,19 +7,14 @@ const selectInterval = document.querySelectorAll('.select-interval');
 const categories = document.getElementById('categories');
 const dropdownMenuElement = document.getElementById('dropdown-li');
 
-//Поворот стрелки при выборе меню аккордеона
-// menuDropdownLinkElement.onclick = () => {
-//     if (!menuDropdownLinkElement.classList.contains('collapsed')) {
-//         arrowElement.style.transform = 'rotate(90deg)';
-//     } else {
-//         arrowElement.style.transform = 'rotate(0deg)';
-//     }
-// };
-
-document.querySelector('.menu').addEventListener('click', () => {
-    console.log('Yf;fk')
-})
-
+// Поворот стрелки при выборе меню аккордеона
+menuDropdownLinkElement.onclick = () => {
+    if (!menuDropdownLinkElement.classList.contains('collapsed')) {
+        arrowElement.style.transform = 'rotate(90deg)';
+    } else {
+        arrowElement.style.transform = 'rotate(0deg)';
+    }
+};
 
 //Выбор пункта меню
 menuDropdown.forEach(item => {

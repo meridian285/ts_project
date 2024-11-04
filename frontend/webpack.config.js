@@ -8,6 +8,7 @@ module.exports = {
     output: {
         filename: 'app.js',
         path: path.resolve(__dirname, 'dist'),
+        publicPath: '/'
     },
     devServer: {
         static: {
@@ -25,9 +26,10 @@ module.exports = {
             patterns: [
                 {from: "./src/templates", to: "templates"},
                 {from: "./src/static/images", to: "images"},
-                {from: "./src/components/menu.js", to: "js"},
+                {from: "./src/components/dashboard/menu.js", to: "js"},
                 {from: "./src/components/dashboard/dashboard.js", to: "js"},
                 {from: "./src/components/dashboard/diagrams.js", to: "js"},
+                {from: "./src/components/dashboard/chart.js", to: "js"},
                 {from: "./src/components/bootstrap.bundle.min.js", to: "js"},
                 {from: "./src/css", to: "css"},
             ],

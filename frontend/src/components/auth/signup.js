@@ -10,6 +10,8 @@ export class SignUp {
             return this.openNewRoute('/');
         }
 
+        document.getElementById('form').reset();
+
         this.fullNameElement = document.getElementById('fullNameInput');
         this.emailElement = document.getElementById('emailInput');
         this.passwordElement = document.getElementById('passwordInput');
@@ -49,12 +51,13 @@ export class SignUp {
         const that = this;
         this.fields.forEach(item => {
             item.element = document.getElementById(item.id);
-            item.element.addEventListener('change', (event) => {
+            item.element.addEventListener('input', (event) => {
                 that.validateField.call(that, item, event.target);
             });
         });
 
         document.getElementById('process-button').addEventListener('click', this.signUp.bind(this));
+
     }
 
     validateField(field, element) {
@@ -101,12 +104,6 @@ export class SignUp {
 
         return field.valid;
     }
-
-    toUpperCaseInput(element) {
-        element.value = element.value.replace(/( |^)[а-яёa-z]/g, (item) => {
-            return item.toUpperCase.bind(this);
-        })
-    };
 
     async signUp() {
         this.commonErrorElement.style.display = 'none';
