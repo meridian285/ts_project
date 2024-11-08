@@ -1,6 +1,7 @@
 import {AuthUtils} from "../../utils/auth-utils";
 import {LOGIN, POST} from "../../../config/config";
 import {HttpUtils} from "../../utils/http-utils";
+import {AuthService} from "../service/auth-service";
 
 export class Login {
     constructor(openNewRoute) {
@@ -55,27 +56,25 @@ export class Login {
         this.commonErrorElement.style.display = 'none';
         if (this.validateField) {
 
-            const result = await HttpUtils.request(LOGIN, POST, false, {
+            const loginResult = await AuthService.logIn({
                 email: this.fields.find( field => field.id === 'emailInput').element.value,
-                password: this.fields.find( field => field.id === 'passwordInput').element.value,
-                rememberMe: this.rememberMeElement.checked,
+                    password: this.fields.find( field => field.id === 'passwordInput').element.value,
+                    rememberMe: this.rememberMeElement.checked,
             });
 
-            if (result.error || !result.response || (result.response && (!result.response.tokens.accessToken ||
-                !result.response.tokens.refreshToken || !result.response.user.id || !result.response.user.name))) {
+            if (loginResult) {
+                // сохраняем данные в localStorage
+                AuthUtils.setAuthInfo(loginResult.tokens.accessToken, loginResult.tokens.refreshToken, {
+                    id: loginResult.user.id,
+                    name: loginResult.user.name,
+                    lastName: loginResult.user.lastName,
+                });
 
-                this.commonErrorElement.style.display = 'block';
-                return;
+                return this.openNewRoute('/');
             }
 
-            // сохраняем данные в localStorage
-            AuthUtils.setAuthInfo(result.response.tokens.accessToken, result.response.tokens.refreshToken, {
-                id: result.response.user.id,
-                name: result.response.user.name,
-                lastName: result.response.user.lastName,
-            });
+            this.commonErrorElement.style.display = 'block';
 
-            this.openNewRoute('/');
         }
     }
 }
