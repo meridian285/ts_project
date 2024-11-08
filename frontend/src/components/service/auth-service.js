@@ -1,5 +1,6 @@
 import {HttpUtils} from "../../utils/http-utils";
-import {LOGIN, POST, SIGNUP} from "../../../config/config";
+import {LOGIN, LOGOUT, POST, SIGNUP} from "../../../config/config";
+import {AuthUtils} from "../../utils/auth-utils";
 
 export class AuthService {
     static async logIn(data) {
@@ -21,5 +22,9 @@ export class AuthService {
             return false;
         }
         return result.response;
+    }
+
+    static async logOut(data) {
+        await HttpUtils.request(LOGOUT, POST, false, data);
     }
 }
