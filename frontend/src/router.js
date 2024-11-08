@@ -5,7 +5,23 @@ import {IncomeAndExpenses} from "./components/income-and-expenses/income-and-exp
 import {Income} from "./components/income/income";
 import {Expenses} from "./components/expenses/expenses";
 import {Logout} from "./components/auth/logout";
-import {EXPENSES, INCOME, INCOME_AND_EXPENSES, LOGIN, LOGOUT, SIGNUP} from "../config/config";
+import {
+    CREATE_EXPENSES,
+    CREATE_INCOME, DELETE_EXPENSES, DELETE_INCOME, EDIT_EXPENSES,
+    EDIT_INCOME,
+    EXPENSES,
+    INCOME,
+    INCOME_AND_EXPENSES,
+    LOGIN,
+    LOGOUT,
+    SIGNUP
+} from "../config/config";
+import {CreateIncome} from "./components/income/createIncome";
+import {EditIncome} from "./components/income/editIncome";
+import {CreateExpenses} from "./components/expenses/createExpenses";
+import {EditExpenses} from "./components/expenses/editIncome";
+import {DeleteIncome} from "./components/income/deleteIncome";
+import {DeleteExpenses} from "./components/expenses/deleteExpenses";
 
 export class Router {
     constructor() {
@@ -57,7 +73,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 load: () => {
                     new IncomeAndExpenses(this.openNewRoute.bind(this));
-                }
+                },
             },
             {
                 route: EXPENSES,
@@ -68,6 +84,31 @@ export class Router {
                     new Expenses(this.openNewRoute.bind(this));
                 }
             },
+
+            {
+                route: CREATE_EXPENSES,
+                title: 'Создание категории расходов',
+                filePathTemplate: '/templates/pages/expenses/create-expenses.html',
+                useLayout: '/templates/layout.html',
+                load: () => {
+                    new CreateExpenses();
+                }
+            },
+            {
+                route: EDIT_EXPENSES,
+                title: 'Редактирование категории расходов',
+                filePathTemplate: '/templates/pages/expenses/edit-expenses.html',
+                useLayout: '/templates/layout.html',
+                load: () => {
+                    new EditExpenses(this.openNewRoute.bind(this));
+                }
+            },
+            {
+                route: DELETE_EXPENSES,
+                load: () => {
+                    new DeleteExpenses();
+                }
+            },
             {
                 route: INCOME,
                 title: 'Доходы',
@@ -75,6 +116,30 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 load: () => {
                     new Income(this.openNewRoute.bind(this));
+                }
+            },
+            {
+                route: CREATE_INCOME,
+                title: 'Создание категории доходов',
+                filePathTemplate: '/templates/pages/income/create-income.html',
+                useLayout: '/templates/layout.html',
+                load: () => {
+                    new CreateIncome(this.openNewRoute.bind(this));
+                }
+            },
+            {
+                route: EDIT_INCOME,
+                title: 'Редактирование категории доходов',
+                filePathTemplate: '/templates/pages/income/edit-income.html',
+                useLayout: '/templates/layout.html',
+                load: () => {
+                    new EditIncome(this.openNewRoute.bind(this));
+                }
+            },
+            {
+                route: DELETE_INCOME,
+                load: () => {
+                    new DeleteIncome(this.openNewRoute.bind(this));
                 }
             },
         ];

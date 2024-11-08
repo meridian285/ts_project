@@ -21,7 +21,7 @@ export class HttpUtils {
         if (useAuth) {
             token = AuthUtils.getAuthInfo(AuthUtils.accessTokenKey);
             if (token) {
-                params.headers['authorization'] = token;
+                params.headers['x-auth-token'] = token;
             }
         }
 
@@ -41,13 +41,18 @@ export class HttpUtils {
         if (response.status < 200 || response.status >= 300) {
             result.error = true;
             if (useAuth && response.status === 401) {
-
                 if (!token) {
                     result.redirect = LOGIN;
+                } else {
+                    const updateTokenResult = await AuthUtils.updateRefreshToken();
+                    if (updateTokenResult) {
+                        return this.request(url, method, useAuth, body);
+                    } else {
+                        result.redirect = LOGIN;
+                    }
                 }
             }
         }
-
         return  result;
     }
 }

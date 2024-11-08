@@ -1,19 +1,12 @@
 import {HttpUtils} from "../../utils/http-utils";
 import {BALANCE, GET} from "../../../config/config";
+import {AuthUtils} from "../../utils/auth-utils";
+import {Layout} from "../layout";
 
 export class Dashboard {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
 
-        this.getBalance().then();
-
-    }
-
-    async getBalance() {
-        const response = await HttpUtils.request(BALANCE, GET, true)
-
-        if (response.error) {
-            return response.redirect ? this.openNewRoute(response.redirect) : null;
-        }
+        Layout.getBalance(this.openNewRoute).then()
     }
 }

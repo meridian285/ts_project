@@ -56,7 +56,6 @@ export class Login {
         if (this.validateField) {
 
             const result = await HttpUtils.request(LOGIN, POST, false, {
-                // email: this.emailElement.value,
                 email: this.fields.find( field => field.id === 'emailInput').element.value,
                 password: this.fields.find( field => field.id === 'passwordInput').element.value,
                 rememberMe: this.rememberMeElement.checked,

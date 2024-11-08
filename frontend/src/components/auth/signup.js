@@ -63,7 +63,9 @@ export class SignUp {
     validateField(field, element) {
         if (field.id === 'fullNameInput') {
             element.addEventListener('input', function () {
-                this.value = this.value.replace(/([A-Z][a-z])/g, '');
+                element.value = element.value.replace(/([0-9])/g, '');
+                element.value = element.value.replace(/([a-z])/g, '');
+                element.value = element.value.replace(/([A-Z])/g, '');
                 element.value = element.value.replace(/( |^)[а-яё]/g, (item) => {
                     return item.toUpperCase();
                 })
