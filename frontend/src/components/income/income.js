@@ -1,6 +1,6 @@
 import {Layout} from "../layout";
-import {HttpUtils} from "../../utils/http-utils";
 import {DELETE_INCOME, EDIT_INCOME, GET, GET_CATEGORIES_INCOME} from "../../../config/config";
+import {IncomeService} from "../service/income-service";
 
 export class Income {
     constructor(openNewRoute) {
@@ -12,11 +12,16 @@ export class Income {
     }
 
     async getCards() {
-        const result = await HttpUtils.request(GET_CATEGORIES_INCOME, GET, true);
+        // const result = await HttpUtils.request(GET_CATEGORIES_INCOME, GET, true);
 
-        console.log(result.response)
+        const response = await IncomeService.getIncomes(GET_CATEGORIES_INCOME);
 
-        this.showCards(result.response)
+        if (response.error) {
+            return response.redirect ? this.openNewRoute(response.redirect) : null;
+        }
+        console.log(response)
+
+        this.showCards(response.incomes)
     }
 
     showCards(getCards) {
