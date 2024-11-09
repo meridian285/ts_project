@@ -1,6 +1,5 @@
 import {HttpUtils} from "../../utils/http-utils";
 import {LOGIN, LOGOUT, POST, SIGNUP} from "../../../config/config";
-import {AuthUtils} from "../../utils/auth-utils";
 
 export class AuthService {
     static async logIn(data) {

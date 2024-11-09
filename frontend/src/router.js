@@ -7,7 +7,7 @@ import {Expenses} from "./components/expenses/expenses";
 import {Logout} from "./components/auth/logout";
 import {
     CREATE_EXPENSES,
-    CREATE_INCOME, DELETE_EXPENSES, DELETE_INCOME, EDIT_EXPENSES,
+    CREATE_INCOME, DELETE_EXPENSE, DELETE_INCOME, EDIT_EXPENSES,
     EDIT_INCOME,
     EXPENSES,
     INCOME,
@@ -104,7 +104,7 @@ export class Router {
                 }
             },
             {
-                route: DELETE_EXPENSES,
+                route: DELETE_EXPENSE,
                 load: () => {
                     new DeleteExpenses();
                 }
@@ -199,7 +199,7 @@ export class Router {
                     link.rel = 'stylesheet';
                     link.href = `/css/${style}`;
                     document.head.insertBefore(link, this.bootstrapStylesElement);
-                })
+                });
             }
             // проверяем есть ли поле title и меняем его на странице
             if (newRoute.title) {

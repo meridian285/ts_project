@@ -1,11 +1,10 @@
 import {Layout} from "../layout";
-import {HttpUtils} from "../../utils/http-utils";
 import {
-    DELETE_EXPENSES,
+    DELETE_EXPENSE,
     EDIT_EXPENSES,
-    GET,
     GET_CATEGORIES_EXPENSE,
 } from "../../../config/config";
+import {ExpensesService} from "../service/expenses-service";
 
 export class Expenses {
     constructor(openNewRoute) {
@@ -18,9 +17,13 @@ export class Expenses {
     }
 
     async getCards() {
-        const result = await HttpUtils.request(GET_CATEGORIES_EXPENSE, GET, true);
+        const response = await ExpensesService.getExpenses(GET_CATEGORIES_EXPENSE);
 
-        this.showCards(result.response);
+        if (response.error) {
+            return response.redirect ? this.openNewRoute(response.redirect) : null;
+        }
+
+        this.showCards(response.incomes);
     }
 
     showCards(getCards) {
@@ -37,7 +40,7 @@ export class Expenses {
                     ${item.title}
                 <div class="action pt-3">
                     <a href="${EDIT_EXPENSES}" class="btn btn-primary">Редактировать</a>
-                    <a href="${DELETE_EXPENSES}" class="delete-card btn btn-danger" data-bs-toggle="modal"
+                    <a href="${DELETE_EXPENSE}" class="delete-card btn btn-danger" data-bs-toggle="modal"
                        data-bs-target="#exampleModal">Удалить</a>
                 </div>
             `;

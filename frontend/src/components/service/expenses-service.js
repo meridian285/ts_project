@@ -1,19 +1,26 @@
 import {HttpUtils} from "../../utils/http-utils";
-import {DELETE, DELETE_INCOME, GET_CATEGORIES_INCOME, POST, PUT} from "../../../config/config";
+import {
+    DELETE, DELETE_EXPENSE,
+    GET_CATEGORIES_EXPENSE,
+    POST,
+    PUT
+} from "../../../config/config";
 
-export class IncomeService{
+export class ExpensesService{
 
-    static async getIncomes() {
+    static async getExpenses() {
         const returnObject = {
             error: false,
             redirect: null,
             incomes: null,
-        }
+        };
 
-        const result = await HttpUtils.request(GET_CATEGORIES_INCOME);
+        const result = await HttpUtils.request(GET_CATEGORIES_EXPENSE);
+
+        console.log(result);
 
         if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
-            returnObject.error = 'Ошибка при запросе категорий доходов';
+            returnObject.error = 'Ошибка при запросе категорий расходов';
             if (result.redirect) {
                 return returnObject.redirect = result.redirect;
             }
@@ -23,58 +30,37 @@ export class IncomeService{
         return returnObject;
     }
 
-    static async getIncome(id) {
+    static async getExpense(id) {
         const returnObject = {
             error: false,
             redirect: null,
-            income: null,
+            expense: null,
         };
 
-        const result = await HttpUtils.request(GET_CATEGORIES_INCOME + id);
+        const result = await HttpUtils.request(GET_CATEGORIES_EXPENSE + id);
 
         if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
-            returnObject.error = 'Ошибка при запросе категории дохода';
+            returnObject.error = 'Ошибка при запросе категории расхода';
             if (result.redirect) {
                 return returnObject.redirect = result.redirect;
             }
             return returnObject;
         }
-        returnObject.income = result.response;
+        returnObject.expense = result.response;
         return returnObject;
     }
 
-    static async updateIncome(id, data) {
+    static async updateExpense(id, data) {
         const returnObject = {
             error: false,
             redirect: null,
             title: null,
         };
 
-        const result = await HttpUtils.request(GET_CATEGORIES_INCOME + '/' + id, PUT, true, data);
+        const result = await HttpUtils.request(GET_CATEGORIES_EXPENSE + '/' + id, PUT, true, data);
 
         if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
-            returnObject.error = 'Ошибка при изменении категории дохода';
-            if (result.redirect) {
-                return returnObject.redirect = result.redirect;
-            }
-            return returnObject;
-        }
-
-        returnObject.title = result.response;
-        return returnObject;
-    }
-
-    static async createIncome(data) {
-        const returnObject = {
-            error: false,
-            redirect: null,
-            title: null,
-        };
-
-        const result = await HttpUtils.request(GET_CATEGORIES_INCOME, POST, true, data);
-
-        if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
-            returnObject.error = 'Ошибка при добавлении категории дохода';
+            returnObject.error = 'Ошибка при изменении категории расхода';
             if (result.redirect) {
                 return returnObject.redirect = result.redirect;
             }
@@ -85,14 +71,35 @@ export class IncomeService{
         return returnObject;
     }
 
-    static async deleteIncome(id) {
+    static async createExpense(data) {
         const returnObject = {
             error: false,
             redirect: null,
             title: null,
         };
 
-        const result = await HttpUtils.request(DELETE_INCOME + '/' + id, DELETE, true);
+        const result = await HttpUtils.request(GET_CATEGORIES_EXPENSE, POST, true, data);
+
+        if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
+            returnObject.error = 'Ошибка при добавлении категории расхода';
+            if (result.redirect) {
+                return returnObject.redirect = result.redirect;
+            }
+            return returnObject;
+        }
+
+        returnObject.title = result.response;
+        return returnObject;
+    }
+
+    static async deleteExpense(id) {
+        const returnObject = {
+            error: false,
+            redirect: null,
+            title: null,
+        };
+
+        const result = await HttpUtils.request(DELETE_EXPENSE + '/' + id, DELETE, true);
 
         if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
             returnObject.error = 'Ошибка при удалении категории дохода';

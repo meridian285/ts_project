@@ -19,7 +19,6 @@ export class Income {
         if (response.error) {
             return response.redirect ? this.openNewRoute(response.redirect) : null;
         }
-        console.log(response)
 
         this.showCards(response.incomes)
     }

@@ -28,7 +28,7 @@ export const DELETE_INCOME = '/delete-income';
 export const EXPENSES = '/expenses';
 export const CREATE_EXPENSES = '/create-expenses';
 export const EDIT_EXPENSES = '/edit-expenses';
-export const DELETE_EXPENSES = '/delete-expenses';
+export const DELETE_EXPENSE = '/delete-expense';
 
 export const INCOME_AND_EXPENSES = '/income-and-expenses';
 export const BALANCE = '/balance';
