@@ -7,8 +7,8 @@ import {Expenses} from "./components/expenses/expenses";
 import {Logout} from "./components/auth/logout";
 import {
     CREATE_EXPENSES,
-    CREATE_INCOME, DELETE_EXPENSE, DELETE_INCOME, EDIT_EXPENSES,
-    EDIT_INCOME,
+    CREATE_INCOME, CREATE_INCOME_AND_EXPENSES, DELETE_EXPENSE, DELETE_INCOME, EDIT_EXPENSES,
+    EDIT_INCOME, EDIT_INCOME_AND_EXPENSES,
     EXPENSES,
     INCOME,
     INCOME_AND_EXPENSES,
@@ -22,12 +22,17 @@ import {CreateExpenses} from "./components/expenses/createExpenses";
 import {EditExpenses} from "./components/expenses/editIncome";
 import {DeleteIncome} from "./components/income/deleteIncome";
 import {DeleteExpenses} from "./components/expenses/deleteExpenses";
+import {CreateIncomeAndExpenses} from "./components/income-and-expenses/create-income-and-expenses";
+import {EditIncomeAndExpenses} from "./components/income-and-expenses/edit-income-and-expenses";
+import {FileUtils} from "./utils/file-utils";
 
 export class Router {
     constructor() {
         this.titlePageElement = document.getElementById('title');
         this.contentPageElement = document.getElementById('content');
         this.bootstrapStylesElement = document.getElementById('bootstrap-styles');
+
+
 
         this.initEvents();
         this.routes = [
@@ -38,7 +43,9 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 load: () => {
                     new Dashboard(this.openNewRoute.bind(this));
-                }
+                },
+                styles: ['dashboard.css'],
+                scripts: ['bootstrap.bundle.min.js', 'chart.js', 'diagrams.js', 'menu.js'],
             },
             {
                 route: LOGIN,
@@ -67,22 +74,14 @@ export class Router {
                 }
             },
             {
-                route: INCOME_AND_EXPENSES,
-                title: 'Доходы и расходы',
-                filePathTemplate: '/templates/pages/income-and-expenses/income-and-expenses.html',
-                useLayout: '/templates/layout.html',
-                load: () => {
-                    new IncomeAndExpenses(this.openNewRoute.bind(this));
-                },
-            },
-            {
                 route: EXPENSES,
                 title: 'Расходы',
                 filePathTemplate: '/templates/pages/expenses/expenses.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
                     new Expenses(this.openNewRoute.bind(this));
-                }
+                },
+                styles: ['expenses.css'],
             },
 
             {
@@ -92,7 +91,8 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 load: () => {
                     new CreateExpenses();
-                }
+                },
+                styles: ['create-expenses.css'],
             },
             {
                 route: EDIT_EXPENSES,
@@ -101,7 +101,8 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 load: () => {
                     new EditExpenses(this.openNewRoute.bind(this));
-                }
+                },
+                styles: ['edit-expenses.css'],
             },
             {
                 route: DELETE_EXPENSE,
@@ -116,7 +117,8 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 load: () => {
                     new Income(this.openNewRoute.bind(this));
-                }
+                },
+                styles: ['income.css'],
             },
             {
                 route: CREATE_INCOME,
@@ -125,7 +127,8 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 load: () => {
                     new CreateIncome(this.openNewRoute.bind(this));
-                }
+                },
+                styles: ['create-income.css'],
             },
             {
                 route: EDIT_INCOME,
@@ -134,13 +137,44 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 load: () => {
                     new EditIncome(this.openNewRoute.bind(this));
-                }
+                },
+                styles: ['edit-income.css'],
             },
             {
                 route: DELETE_INCOME,
                 load: () => {
                     new DeleteIncome(this.openNewRoute.bind(this));
                 }
+            },
+            {
+                route: INCOME_AND_EXPENSES,
+                title: 'Доходы и расходы',
+                filePathTemplate: '/templates/pages/income-and-expenses/income-and-expenses.html',
+                useLayout: '/templates/layout.html',
+                load: () => {
+                    new IncomeAndExpenses(this.openNewRoute.bind(this));
+                },
+                styles: ['income-and-expenses.css'],
+            },
+            {
+                route: CREATE_INCOME_AND_EXPENSES,
+                title: 'Создание дохода/расхода',
+                filePathTemplate: '/templates/pages/income-and-expenses/create-income-and-expenses.html',
+                useLayout: '/templates/layout.html',
+                load: () => {
+                    new CreateIncomeAndExpenses(this.openNewRoute.bind(this));
+                },
+                styles: ['create-income-and-expenses.css'],
+            },
+            {
+                route: EDIT_INCOME_AND_EXPENSES,
+                title: 'Редактирование дохода/расхода',
+                filePathTemplate: '/templates/pages/income-and-expenses/edit-income-and-expenses.html',
+                useLayout: '/templates/layout.html',
+                load: () => {
+                    new EditIncomeAndExpenses(this.openNewRoute.bind(this));
+                },
+                styles: ['edit-income-and-expenses.css'],
             },
         ];
     }
@@ -181,6 +215,11 @@ export class Router {
         if (oldRoute) {
             const currentRoute = this.routes.find(item => item.route === oldRoute);
 
+            if (currentRoute.scripts && currentRoute.scripts.length > 0) {
+                currentRoute.scripts.forEach(script => {
+                    document.querySelector(`script[src='/js/${script}']`).remove();
+                })
+            }
             if (currentRoute.styles && currentRoute.styles.length > 0) {
                 currentRoute.styles.forEach(style => {
                     document.querySelector(`link[href='/css/${style}']`).remove();
@@ -201,6 +240,13 @@ export class Router {
                     document.head.insertBefore(link, this.bootstrapStylesElement);
                 });
             }
+
+            if (newRoute.scripts && newRoute.scripts.length > 0) {
+                for (const script of newRoute.scripts) {
+                    await FileUtils.loadPageScript('/js/' + script)
+                }
+            }
+
             // проверяем есть ли поле title и меняем его на странице
             if (newRoute.title) {
                 this.titlePageElement.innerText = newRoute.title;

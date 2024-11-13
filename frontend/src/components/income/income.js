@@ -1,5 +1,5 @@
 import {Layout} from "../layout";
-import {DELETE_INCOME, EDIT_INCOME, GET, GET_CATEGORIES_INCOME} from "../../../config/config";
+import {DELETE_INCOME, EDIT_INCOME, GET_CATEGORIES_INCOME} from "../../../config/config";
 import {IncomeService} from "../service/income-service";
 
 export class Income {
@@ -12,8 +12,6 @@ export class Income {
     }
 
     async getCards() {
-        // const result = await HttpUtils.request(GET_CATEGORIES_INCOME, GET, true);
-
         const response = await IncomeService.getIncomes(GET_CATEGORIES_INCOME);
 
         if (response.error) {
@@ -36,9 +34,10 @@ export class Income {
             cardElement.innerHTML = `
                     ${item.title}
                 <div class="action pt-3">
-                    <a href="${EDIT_INCOME}" class="btn btn-primary">Редактировать</a>
-                    <a href="${DELETE_INCOME}" class="delete-card btn btn-danger" data-bs-toggle="modal"
-                       data-bs-target="#exampleModal">Удалить</a>
+                    <a href="${EDIT_INCOME}/edit?id=${item.id}" class="btn btn-primary">Редактировать</a>
+                    <a href="${DELETE_INCOME}?id=${item.id}" class="delete-card btn btn-danger"
+
+                       >Удалить</a>
                 </div>
             `;
             newCard.before(cardElement);

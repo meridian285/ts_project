@@ -3,51 +3,51 @@
 </h1>
 
 <form class="form mt-5 ms-5 d-flex gap-2 flex-wrap" style="width: 421px;">
-    <button type="button" class="btn btn-success">Создать доход</button>
-    <button type="button" class="btn btn-danger">Создать расход</button>
+    <a href="/create-income-and-expenses" class="btn btn-success">Создать доход</a>
+    <a href="/edit-income-and-expenses" class="btn btn-danger">Создать расход</a>
 </form>
 
 <div class="days">
     <ul class="list-days d-flex flex-wrap p-0 ms-4 mt-4">
         <li class="ms-4 mt-2">
-            <a href="#" class="btn btn-outline-secondary w-100">
+            <a href="javascript:void(0)" class="btn btn-outline-secondary w-100" id="today">
                 Сегодня
             </a>
         </li>
         <li class="ms-4 mt-2">
-            <a href="#" class="btn btn-outline-secondary w-100">
+            <a href="javascript:void(0)" class="btn btn-outline-secondary w-100" id="week">
                 Неделя
             </a>
         </li>
         <li class="ms-4 mt-2">
-            <a href="#" class="btn btn-outline-secondary w-100">
+            <a href="javascript:void(0)" class="btn btn-outline-secondary w-100" id="month">
                 Месяц
             </a>
         </li>
         <li class="ms-4 mt-2">
-            <a href="#" class="btn btn-outline-secondary w-100">
+            <a href="javascript:void(0)" class="btn btn-outline-secondary w-100" id="year">
                 Год
             </a>
         </li>
         <li class="ms-4 mt-2">
-            <a href="#" class="btn btn-outline-secondary w-100">
+            <a href="javascript:void(0)" class="btn btn-outline-secondary w-100" id="all-time">
                 Все
             </a>
         </li>
         <li class="ms-4 mt-2">
-            <a href="#" class="btn btn-outline-secondary w-100">
+            <a href="javascript:void(0)" class="btn btn-outline-secondary w-100" id="interval">
                 Интервал
             </a>
         </li>
         <li class="ms-4 mt-2 d-flex align-items-center justify-content-around">
             <span>c</span>
-            <a href="#" class="text-secondary">
+            <a href="javascript:void(0)" class="text-secondary">
                 Дата
             </a>
         </li>
         <li class="ms-4 mt-2 d-flex align-items-center justify-content-around">
             <span>по</span>
-            <a href="#" class="text-secondary">
+            <a href="javascript:void(0)" class="text-secondary">
                 Дата
             </a>
         </li>
@@ -66,40 +66,7 @@
         <th scope="col"></th>
     </tr>
     </thead>
-    <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td class="text-success">доход</td>
-        <td>зарплата</td>
-        <td>500$</td>
-        <td>11.09.2022</td>
-        <td></td>
-        <td>
-            <a>
-                <img data-bs-toggle="modal" data-bs-target="#exampleModal" role="button"
-                     src="../images/cart.png"
-                     alt="Корзина">
-            </a>
-            <img role="button" src="../images/edit.png" alt="Изменить">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td class="text-danger">расход</td>
-        <td>жилье</td>
-        <td>2500$</td>
-        <td>12.09.2022</td>
-        <td></td>
-        <td>
-            <a>
-                <img data-bs-toggle="modal" data-bs-target="#exampleModal" role="button"
-                     src="../images/cart.png"
-                     alt="Корзина">
-            </a>
-            <a href="#">
-                <img role="button" src="../images/edit.png" alt="Изменить">
-            </a>
-        </td>
-    </tr>
+    <tbody id="dataTable">
+
     </tbody>
 </table>

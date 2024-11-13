@@ -1,5 +1,8 @@
+const host = 'http://localhost:3000';
+
 export default {
-    host: 'http://localhost:3000/api'
+    host: host,
+    api: host + '/api',
 };
 
 export const HEADERS = {
@@ -23,7 +26,7 @@ export const DASHBOARD = '/dashboard';
 export const INCOME = '/income';
 export const CREATE_INCOME = '/create-income';
 export const EDIT_INCOME = '/edit-income';
-export const DELETE_INCOME = '/delete-income';
+export const DELETE_INCOME = '/income/delete';
 
 export const EXPENSES = '/expenses';
 export const CREATE_EXPENSES = '/create-expenses';
@@ -31,6 +34,8 @@ export const EDIT_EXPENSES = '/edit-expenses';
 export const DELETE_EXPENSE = '/delete-expense';
 
 export const INCOME_AND_EXPENSES = '/income-and-expenses';
+export const CREATE_INCOME_AND_EXPENSES = '/create-income-and-expenses';
+export const EDIT_INCOME_AND_EXPENSES = '/edit-income-and-expenses';
 export const BALANCE = '/balance';
 
 // categories

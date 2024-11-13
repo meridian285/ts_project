@@ -92,7 +92,7 @@ export class IncomeService{
             title: null,
         };
 
-        const result = await HttpUtils.request(DELETE_INCOME + '/' + id, DELETE, true);
+        const result = await HttpUtils.request(GET_CATEGORIES_INCOME + '/' + id, DELETE, true);
 
         if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
             returnObject.error = 'Ошибка при удалении категории дохода';
@@ -102,7 +102,6 @@ export class IncomeService{
             return returnObject;
         }
 
-        returnObject.title = result.response;
         return returnObject;
     }
 }

@@ -43,14 +43,14 @@ export class Operations{
         return returnObject;
     }
 
-    static async getOperationWithFilter(data) {
+    static async getOperationWithFilter(dateInterval) {
         const returnObject = {
             error: false,
             redirect: null,
             operations: null,
         };
 
-        const result = await HttpUtils.request(OPERATIONS + data);
+        const result = await HttpUtils.request(OPERATIONS + dateInterval);
 
         if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
             returnObject.error = 'Ошибка при запросе операции';

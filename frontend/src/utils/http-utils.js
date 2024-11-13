@@ -31,7 +31,7 @@ export class HttpUtils {
 
         let response = null;
         try {
-            response = await fetch(config.host + url, params);
+            response = await fetch(config.api + url, params);
             result.response = await response.json();
         } catch (e) {
             result.error = true;
