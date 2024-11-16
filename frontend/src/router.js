@@ -8,23 +8,23 @@ import {Logout} from "./components/auth/logout";
 import {
     CREATE_EXPENSES,
     CREATE_INCOME, CREATE_INCOME_AND_EXPENSES, DELETE_EXPENSE, DELETE_INCOME, EDIT_EXPENSES,
-    EDIT_INCOME, EDIT_INCOME_AND_EXPENSES,
+    EDIT_INCOME_AND_EXPENSES,
     EXPENSES,
     INCOME,
-    INCOME_AND_EXPENSES,
+    INCOME_AND_EXPENSES, INCOME_EDIT,
     LOGIN,
     LOGOUT,
     SIGNUP
 } from "../config/config";
 import {CreateIncome} from "./components/income/createIncome";
 import {EditIncome} from "./components/income/editIncome";
-import {CreateExpenses} from "./components/expenses/createExpenses";
-import {EditExpenses} from "./components/expenses/editIncome";
+import {CreateExpense} from "./components/expenses/createExpense";
 import {DeleteIncome} from "./components/income/deleteIncome";
-import {DeleteExpenses} from "./components/expenses/deleteExpenses";
-import {CreateIncomeAndExpenses} from "./components/income-and-expenses/create-income-and-expenses";
+import {DeleteExpense} from "./components/expenses/deleteExpense";
+import {CreateOperation} from "./components/income-and-expenses/createOperation";
 import {EditIncomeAndExpenses} from "./components/income-and-expenses/edit-income-and-expenses";
 import {FileUtils} from "./utils/file-utils";
+import {EditExpense} from "./components/expenses/editExpense";
 
 export class Router {
     constructor() {
@@ -45,7 +45,7 @@ export class Router {
                     new Dashboard(this.openNewRoute.bind(this));
                 },
                 styles: ['dashboard.css'],
-                scripts: ['bootstrap.bundle.min.js', 'chart.js', 'diagrams.js', 'menu.js'],
+                scripts: ['chart.js', 'menu.js'],
             },
             {
                 route: LOGIN,
@@ -82,6 +82,7 @@ export class Router {
                     new Expenses(this.openNewRoute.bind(this));
                 },
                 styles: ['expenses.css'],
+                scripts: ['delete_action.js', 'menu.js'],
             },
 
             {
@@ -90,9 +91,10 @@ export class Router {
                 filePathTemplate: '/templates/pages/expenses/create-expenses.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new CreateExpenses();
+                    new CreateExpense(this.openNewRoute.bind(this));
                 },
                 styles: ['create-expenses.css'],
+                scripts: ['menu.js'],
             },
             {
                 route: EDIT_EXPENSES,
@@ -100,14 +102,15 @@ export class Router {
                 filePathTemplate: '/templates/pages/expenses/edit-expenses.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new EditExpenses(this.openNewRoute.bind(this));
+                    new EditExpense(this.openNewRoute.bind(this));
                 },
                 styles: ['edit-expenses.css'],
+                scripts: ['menu.js'],
             },
             {
                 route: DELETE_EXPENSE,
                 load: () => {
-                    new DeleteExpenses();
+                    new DeleteExpense(this.openNewRoute.bind(this));
                 }
             },
             {
@@ -119,6 +122,7 @@ export class Router {
                     new Income(this.openNewRoute.bind(this));
                 },
                 styles: ['income.css'],
+                scripts: ['delete_action.js', 'menu.js'],
             },
             {
                 route: CREATE_INCOME,
@@ -129,9 +133,10 @@ export class Router {
                     new CreateIncome(this.openNewRoute.bind(this));
                 },
                 styles: ['create-income.css'],
+                scripts: ['menu.js'],
             },
             {
-                route: EDIT_INCOME,
+                route: INCOME_EDIT,
                 title: 'Редактирование категории доходов',
                 filePathTemplate: '/templates/pages/income/edit-income.html',
                 useLayout: '/templates/layout.html',
@@ -139,6 +144,7 @@ export class Router {
                     new EditIncome(this.openNewRoute.bind(this));
                 },
                 styles: ['edit-income.css'],
+                scripts: ['menu.js'],
             },
             {
                 route: DELETE_INCOME,
@@ -154,7 +160,8 @@ export class Router {
                 load: () => {
                     new IncomeAndExpenses(this.openNewRoute.bind(this));
                 },
-                styles: ['income-and-expenses.css'],
+                styles: ['income-and-expenses.css', 'dashboard.css'],
+                scripts: ['menu.js'],
             },
             {
                 route: CREATE_INCOME_AND_EXPENSES,
@@ -162,9 +169,10 @@ export class Router {
                 filePathTemplate: '/templates/pages/income-and-expenses/create-income-and-expenses.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new CreateIncomeAndExpenses(this.openNewRoute.bind(this));
+                    new CreateOperation(this.openNewRoute.bind(this));
                 },
                 styles: ['create-income-and-expenses.css'],
+                scripts: ['menu.js'],
             },
             {
                 route: EDIT_INCOME_AND_EXPENSES,
@@ -175,6 +183,7 @@ export class Router {
                     new EditIncomeAndExpenses(this.openNewRoute.bind(this));
                 },
                 styles: ['edit-income-and-expenses.css'],
+                scripts: ['menu.js'],
             },
         ];
     }

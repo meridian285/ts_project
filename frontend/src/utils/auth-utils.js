@@ -37,7 +37,6 @@ export class AuthUtils {
         if (refreshToken) {
             const response = await fetch(config.api + REFRESH, {
                 method: POST,
-                headers: HEADERS,
                 body: JSON.stringify({refreshToken: refreshToken})
             });
             if (response && response.status === 200) {

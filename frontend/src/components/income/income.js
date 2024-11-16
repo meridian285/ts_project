@@ -1,9 +1,10 @@
 import {Layout} from "../layout";
-import {DELETE_INCOME, EDIT_INCOME, GET_CATEGORIES_INCOME} from "../../../config/config";
+import {EDIT_INCOME, GET_CATEGORIES_INCOME, INCOME_EDIT} from "../../../config/config";
 import {IncomeService} from "../service/income-service";
 
 export class Income {
     constructor(openNewRoute) {
+        new Layout();
         this.openNewRoute = openNewRoute;
 
         Layout.getBalance(this.openNewRoute).then();
@@ -34,13 +35,13 @@ export class Income {
             cardElement.innerHTML = `
                     ${item.title}
                 <div class="action pt-3">
-                    <a href="${EDIT_INCOME}/edit?id=${item.id}" class="btn btn-primary">Редактировать</a>
-                    <a href="${DELETE_INCOME}?id=${item.id}" class="delete-card btn btn-danger"
-
-                       >Удалить</a>
+                    <a href="${INCOME_EDIT}?id=${item.id}"  class="btn btn-primary">Редактировать</a>
+                    <a href="#" onclick="handler_delete_income(this)" class="delete-card btn btn-danger" id="btn-${item.id}" data-bs-toggle="modal"
+                       data-bs-target="#exampleModal">Удалить</a>
                 </div>
             `;
             newCard.before(cardElement);
         });
     }
 }
+

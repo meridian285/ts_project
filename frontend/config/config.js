@@ -24,14 +24,14 @@ export const REFRESH = '/refresh';
 
 export const DASHBOARD = '/dashboard';
 export const INCOME = '/income';
-export const CREATE_INCOME = '/create-income';
-export const EDIT_INCOME = '/edit-income';
+export const CREATE_INCOME = '/income/create';
+export const INCOME_EDIT = '/income/edit';
 export const DELETE_INCOME = '/income/delete';
 
 export const EXPENSES = '/expenses';
-export const CREATE_EXPENSES = '/create-expenses';
-export const EDIT_EXPENSES = '/edit-expenses';
-export const DELETE_EXPENSE = '/delete-expense';
+export const CREATE_EXPENSES = '/expenses/create';
+export const EDIT_EXPENSES = '/expenses/edit';
+export const DELETE_EXPENSE = '/expense/delete';
 
 export const INCOME_AND_EXPENSES = '/income-and-expenses';
 export const CREATE_INCOME_AND_EXPENSES = '/create-income-and-expenses';
@@ -44,3 +44,8 @@ export  const GET_CATEGORIES_INCOME = '/categories/income';
 
 // operations
 export const OPERATIONS = '/operations';
+
+export function handler(element) {
+    const id = element.id.replace(/[^0-9]/g,"")
+    document.getElementById('delete-btn').href = DELETE_INCOME + '?id=' + id;
+}

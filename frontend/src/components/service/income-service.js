@@ -30,7 +30,7 @@ export class IncomeService{
             income: null,
         };
 
-        const result = await HttpUtils.request(GET_CATEGORIES_INCOME + id);
+        const result = await HttpUtils.request(GET_CATEGORIES_INCOME + '/' + id);
 
         if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
             returnObject.error = 'Ошибка при запросе категории дохода';

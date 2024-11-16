@@ -1,12 +1,12 @@
-import {INCOME} from "../../../config/config";
-import {IncomeService} from "../service/income-service";
+import {EXPENSES} from "../../../config/config";
+import {ExpensesService} from "../service/expenses-service";
 
-export class CreateIncome {
+export class CreateExpense {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
 
         this.inputNameElement = document.getElementById('inputName');
-        this.saveButtonElement = document.getElementById('createIncome');
+        this.saveButtonElement = document.getElementById('createExpenses');
 
         this.fields = [
             {
@@ -54,18 +54,17 @@ export class CreateIncome {
 
         return field.valid;
     }
-
     async createIncome(e) {
         e.preventDefault();
 
         if (this.validateField) {
 
-            await IncomeService.createIncome({
+            await ExpensesService.createExpense({
                 title: this.inputNameElement.value
             })
 
             document.getElementById('form').reset();
-            this.openNewRoute(INCOME);
+            this.openNewRoute(EXPENSES);
         }
     }
 }

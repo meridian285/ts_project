@@ -1,6 +1,5 @@
 import {Layout} from "../layout";
 import {
-    DELETE_EXPENSE,
     EDIT_EXPENSES,
     GET_CATEGORIES_EXPENSE,
 } from "../../../config/config";
@@ -8,10 +7,8 @@ import {ExpensesService} from "../service/expenses-service";
 
 export class Expenses {
     constructor(openNewRoute) {
+        new Layout();
         this.openNewRoute = openNewRoute;
-
-
-        Layout.getBalance(this.openNewRoute).then()
 
         this.getCards().then();
     }
@@ -39,8 +36,8 @@ export class Expenses {
             cardElement.innerHTML = `
                     ${item.title}
                 <div class="action pt-3">
-                    <a href="${EDIT_EXPENSES}" class="btn btn-primary">Редактировать</a>
-                    <a href="${DELETE_EXPENSE}" class="delete-card btn btn-danger" data-bs-toggle="modal"
+                    <a href="${EDIT_EXPENSES}?id=${item.id}" class="btn btn-primary">Редактировать</a>
+                    <a href="#" onclick="handler_delete_expenses(this)" class="delete-card btn btn-danger" id="btn-${item.id}" data-bs-toggle="modal"
                        data-bs-target="#exampleModal">Удалить</a>
                 </div>
             `;

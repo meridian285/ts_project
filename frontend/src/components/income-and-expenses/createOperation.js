@@ -1,7 +1,8 @@
 import {Layout} from "../layout";
 
-export class CreateIncomeAndExpenses {
+export class CreateOperation {
     constructor(openNewRoute) {
+        new Layout();
         this.openNewRoute = openNewRoute;
 
 

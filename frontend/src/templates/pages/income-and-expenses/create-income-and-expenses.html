@@ -3,10 +3,18 @@
 </h1>
 
 <form class="form mt-5 ms-5 d-flex gap-2 flex-wrap" style="width: 421px;">
-    <input type="text" class="form-control" placeholder="Тип...">
-    <input type="text" class="form-control" placeholder="Категория...">
+<!--    <input type="text" class="form-control" placeholder="Тип...">-->
+
+    <select type="text" id="type" class="form-control">
+        <option value="new" selected>Доход</option>
+        <option value="confirmed">Расход</option>
+    </select>
+    <select type="text" id="category" class="form-control">
+
+    </select>
+
     <input type="text" class="form-control" placeholder="Сумма в $...">
-    <input type="text" class="form-control" placeholder="Дата...">
+    <input type="date" class="form-control" id="start" name="trip-start" value="2024-11-16" min="2010-01-01" max="2030-12-31" />
     <input type="text" class="form-control" placeholder="Комментарий...">
     <button type="button" class="btn btn-success mt-3">Создать</button>
     <a href="/income-and-expenses" class="btn btn-danger mt-3">Отмена</a>

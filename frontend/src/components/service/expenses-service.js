@@ -37,7 +37,7 @@ export class ExpensesService{
             expense: null,
         };
 
-        const result = await HttpUtils.request(GET_CATEGORIES_EXPENSE + id);
+        const result = await HttpUtils.request(GET_CATEGORIES_EXPENSE + '/' + id);
 
         if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
             returnObject.error = 'Ошибка при запросе категории расхода';
@@ -99,17 +99,16 @@ export class ExpensesService{
             title: null,
         };
 
-        const result = await HttpUtils.request(DELETE_EXPENSE + '/' + id, DELETE, true);
+        const result = await HttpUtils.request(GET_CATEGORIES_EXPENSE + '/' + id, DELETE);
 
         if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
-            returnObject.error = 'Ошибка при удалении категории дохода';
+            returnObject.error = 'Ошибка при удалении категории расхода';
             if (result.redirect) {
                 return returnObject.redirect = result.redirect;
             }
             return returnObject;
         }
 
-        returnObject.title = result.response;
         return returnObject;
     }
 }

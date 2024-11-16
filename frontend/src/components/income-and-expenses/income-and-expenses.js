@@ -3,12 +3,14 @@ import {Operations} from "../service/operations";
 
 export class IncomeAndExpenses {
     constructor(openNewRoute) {
+        new Layout();
         this.openNewRoute = openNewRoute;
 
         this.table = document.getElementById('dataTable');
 
-        Layout.getBalance(this.openNewRoute).then()
+        Layout.getBalance(this.openNewRoute).then();
 
+        this.content();
 
         this.getData().then();
     }
@@ -63,5 +65,16 @@ export class IncomeAndExpenses {
         });
     }
 
-
+    content() {
+        const selectInterval = document.querySelectorAll('.select-interval');
+        // Выбор временного интервала
+        selectInterval.forEach(item =>
+            item.addEventListener('click', event => {
+                if (event) {
+                    selectInterval.forEach(item => item.classList.remove('active'));
+                    item.classList.add('active');
+                }
+            })
+        )
+    }
 }
