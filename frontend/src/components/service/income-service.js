@@ -20,6 +20,7 @@ export class IncomeService{
         }
 
         returnObject.incomes = result.response;
+
         return returnObject;
     }
 

@@ -12,12 +12,10 @@ export class ExpensesService{
         const returnObject = {
             error: false,
             redirect: null,
-            incomes: null,
+            expenses: null,
         };
 
         const result = await HttpUtils.request(GET_CATEGORIES_EXPENSE);
-
-        console.log(result);
 
         if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
             returnObject.error = 'Ошибка при запросе категорий расходов';
@@ -26,7 +24,7 @@ export class ExpensesService{
             }
         }
 
-        returnObject.incomes = result.response;
+        returnObject.expenses = result.response;
         return returnObject;
     }
 

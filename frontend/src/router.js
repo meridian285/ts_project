@@ -21,7 +21,7 @@ import {EditIncome} from "./components/income/editIncome";
 import {CreateExpense} from "./components/expenses/createExpense";
 import {DeleteIncome} from "./components/income/deleteIncome";
 import {DeleteExpense} from "./components/expenses/deleteExpense";
-import {CreateOperation} from "./components/income-and-expenses/createOperation";
+import {CreateOperation} from "./components/income-and-expenses/create-operation";
 import {EditIncomeAndExpenses} from "./components/income-and-expenses/edit-income-and-expenses";
 import {FileUtils} from "./utils/file-utils";
 import {EditExpense} from "./components/expenses/editExpense";

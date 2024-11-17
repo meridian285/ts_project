@@ -1,5 +1,13 @@
 import {HttpUtils} from "../../utils/http-utils";
-import {DELETE, DELETE_INCOME, GET_CATEGORIES_INCOME, OPERATIONS, POST, PUT} from "../../../config/config";
+import {
+    CREATE_INCOME_AND_EXPENSES,
+    DELETE,
+    DELETE_INCOME,
+    GET_CATEGORIES_INCOME,
+    OPERATIONS,
+    POST,
+    PUT
+} from "../../../config/config";
 
 export class Operations{
 
@@ -92,7 +100,7 @@ export class Operations{
             operation: null,
         };
 
-        const result = await HttpUtils.request(GET_CATEGORIES_INCOME, POST, true, data);
+        const result = await HttpUtils.request(OPERATIONS, POST, true, data);
 
         if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
             returnObject.error = 'Ошибка при добавлении операции';
