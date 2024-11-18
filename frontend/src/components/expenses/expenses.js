@@ -20,7 +20,7 @@ export class Expenses {
             return response.redirect ? this.openNewRoute(response.redirect) : null;
         }
 
-        this.showCards(response.incomes);
+        this.showCards(response.expenses);
     }
 
     showCards(getCards) {

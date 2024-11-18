@@ -33,9 +33,9 @@ export const CREATE_EXPENSES = '/expenses/create';
 export const EDIT_EXPENSES = '/expenses/edit';
 export const DELETE_EXPENSE = '/expense/delete';
 
-export const INCOME_AND_EXPENSES = '/income-and-expenses';
-export const CREATE_INCOME_AND_EXPENSES = '/create-income-and-expenses';
-export const EDIT_INCOME_AND_EXPENSES = '/edit-income-and-expenses';
+export const ROUTE_OPERATIONS = '/operations';
+export const CREATE_OPERATION = '/create-operation';
+export const EDIT_OPERATION = '/edit-operation';
 export const BALANCE = '/balance';
 
 // categories

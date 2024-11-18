@@ -1,9 +1,8 @@
 import {Layout} from "../layout";
 import {IncomeService} from "../service/income-service";
 import {ExpensesService} from "../service/expenses-service";
-import {IncomeAndExpenses} from "./income-and-expenses";
-import {Operations} from "../service/operations";
-import {INCOME_AND_EXPENSES} from "../../../config/config";
+import {OperationsService} from "../service/operations-service";
+import {OPERATIONS} from "../../../config/config";
 
 export class CreateOperation {
     constructor(openNewRoute) {
@@ -33,12 +32,11 @@ export class CreateOperation {
             }
         });
 
-
-        this.saveButtonElement.addEventListener('click', this.setCategory.bind(this))
+        this.saveButtonElement.addEventListener('click', this.setCategory.bind(this));
     }
 
     async setCategory() {
-        const result = await Operations.createOperation({
+        await OperationsService.createOperation({
             type: this.typeSelectElement.value,
             amount: Number(this.amountInputElement.value),
             date: this.dateInputElement.value,
@@ -46,7 +44,7 @@ export class CreateOperation {
             category_id: Number(this.categorySelectElement.value),
         });
 
-        this.openNewRoute(INCOME_AND_EXPENSES);
+        this.openNewRoute(OPERATIONS);
     }
 
     async getIncomes() {

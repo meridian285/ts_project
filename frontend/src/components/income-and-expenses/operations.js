@@ -1,7 +1,8 @@
 import {Layout} from "../layout";
-import {Operations} from "../service/operations";
+import {OperationsService} from "../service/operations-service";
+import {EDIT_OPERATION, ROUTE_OPERATIONS} from "../../../config/config";
 
-export class IncomeAndExpenses {
+export class Operations {
     constructor(openNewRoute) {
         new Layout();
         this.openNewRoute = openNewRoute;
@@ -23,7 +24,7 @@ export class IncomeAndExpenses {
         // const interval = `?period=interval&dateFrom=2022-09-12&dateTo=2022-09-13`;
         const interval = `?period=interval&dateFrom=${dateFrom}&dateTo=${dateTo}`;
 
-        const response = await Operations.getOperationWithFilter(interval);
+        const response = await OperationsService.getOperationWithFilter(interval);
 
         if (response.error) {
             return response.redirect ? this.openNewRoute(response.redirect) : null;
@@ -49,7 +50,7 @@ export class IncomeAndExpenses {
                     <th scope="row">${index + 1}</th>
                     <td class="${color}">${typeValue}</td>
                     <td>${item.category}</td>
-                    <td>${item.amount}</td>
+                    <td>${item.amount}$</td>
                     <td>${dateFormat.toLocaleDateString('ru-RU')}</td>
                     <td>${item.comment}</td>
                     <td>
@@ -58,7 +59,10 @@ export class IncomeAndExpenses {
                                  src="../images/cart.png"
                                  alt="Корзина">
                         </a>
-                        <img role="button" src="../images/edit.png" alt="Изменить">
+                        
+                        <a href="${EDIT_OPERATION}?id=${item.id}">
+                            <img href="" src="../images/edit.png" alt="Изменить">
+                        </a>
                     </td>
             `;
             this.table.appendChild(trElement);

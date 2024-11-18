@@ -1,19 +1,19 @@
 import {Dashboard} from "./components/dashboard/dashboard";
 import {Login} from "./components/auth/login";
 import {SignUp} from "./components/auth/signup";
-import {IncomeAndExpenses} from "./components/income-and-expenses/income-and-expenses";
+import {Operations} from "./components/income-and-expenses/operations";
 import {Income} from "./components/income/income";
 import {Expenses} from "./components/expenses/expenses";
 import {Logout} from "./components/auth/logout";
 import {
     CREATE_EXPENSES,
-    CREATE_INCOME, CREATE_INCOME_AND_EXPENSES, DELETE_EXPENSE, DELETE_INCOME, EDIT_EXPENSES,
-    EDIT_INCOME_AND_EXPENSES,
+    CREATE_INCOME, CREATE_INCOME_AND_EXPENSES, CREATE_OPERATION, DELETE_EXPENSE, DELETE_INCOME, EDIT_EXPENSES,
+    EDIT_INCOME_AND_EXPENSES, EDIT_OPERATION,
     EXPENSES,
     INCOME,
     INCOME_AND_EXPENSES, INCOME_EDIT,
     LOGIN,
-    LOGOUT,
+    LOGOUT, ROUTE_OPERATIONS,
     SIGNUP
 } from "../config/config";
 import {CreateIncome} from "./components/income/createIncome";
@@ -22,7 +22,7 @@ import {CreateExpense} from "./components/expenses/createExpense";
 import {DeleteIncome} from "./components/income/deleteIncome";
 import {DeleteExpense} from "./components/expenses/deleteExpense";
 import {CreateOperation} from "./components/income-and-expenses/create-operation";
-import {EditIncomeAndExpenses} from "./components/income-and-expenses/edit-income-and-expenses";
+import {EditIncomeAndExpenses, EditOperation} from "./components/income-and-expenses/edit-operation.js";
 import {FileUtils} from "./utils/file-utils";
 import {EditExpense} from "./components/expenses/editExpense";
 
@@ -153,20 +153,20 @@ export class Router {
                 }
             },
             {
-                route: INCOME_AND_EXPENSES,
+                route: ROUTE_OPERATIONS,
                 title: 'Доходы и расходы',
-                filePathTemplate: '/templates/pages/income-and-expenses/income-and-expenses.html',
+                filePathTemplate: '/templates/pages/income-and-expenses/operations.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new IncomeAndExpenses(this.openNewRoute.bind(this));
+                    new Operations(this.openNewRoute.bind(this));
                 },
                 styles: ['income-and-expenses.css', 'dashboard.css'],
                 scripts: ['menu.js'],
             },
             {
-                route: CREATE_INCOME_AND_EXPENSES,
+                route: CREATE_OPERATION,
                 title: 'Создание дохода/расхода',
-                filePathTemplate: '/templates/pages/income-and-expenses/create-income-and-expenses.html',
+                filePathTemplate: '/templates/pages/income-and-expenses/create-operations.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
                     new CreateOperation(this.openNewRoute.bind(this));
@@ -175,12 +175,12 @@ export class Router {
                 scripts: ['menu.js'],
             },
             {
-                route: EDIT_INCOME_AND_EXPENSES,
+                route: EDIT_OPERATION,
                 title: 'Редактирование дохода/расхода',
-                filePathTemplate: '/templates/pages/income-and-expenses/edit-income-and-expenses.html',
+                filePathTemplate: '/templates/pages/income-and-expenses/edit-operations.html',
                 useLayout: '/templates/layout.html',
                 load: () => {
-                    new EditIncomeAndExpenses(this.openNewRoute.bind(this));
+                    new EditOperation(this.openNewRoute.bind(this));
                 },
                 styles: ['edit-income-and-expenses.css'],
                 scripts: ['menu.js'],
