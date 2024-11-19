@@ -59,12 +59,24 @@ export class Dashboard {
         this.showDiagram(response.operations);
     }
 
+    clearCanvas(element) {
+        let ctx = element.getContext('2d');
+        ctx.clearRect(0, 0, element.width, element.height);
+        // ctx.fillStyle = '#ffffff';
+        // ctx.fillRect(0, 0, element.width, element.height);
+    }
 
 
     showDiagram(data) {
+        const incomeDiagram = document.getElementById('income-diagram');
+        const expensesDiagram = document.getElementById('expenses-diagram');
+
+        this.clearCanvas(incomeDiagram);
+        this.clearCanvas(expensesDiagram);
 
         let incomeData = [];
         let incomeDataName = [];
+
         let expensesData = [];
         let expensesDataName = [];
 
@@ -78,7 +90,6 @@ export class Dashboard {
             }
         })
 
-        const incomeDiagram = document.getElementById('income-diagram');
 
         new Chart(incomeDiagram, {
             type: 'pie',
@@ -107,7 +118,6 @@ export class Dashboard {
             }
         });
 
-        const expensesDiagram = document.getElementById('expenses-diagram');
 
         new Chart(expensesDiagram, {
             type: 'pie',
