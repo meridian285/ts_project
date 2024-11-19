@@ -5,46 +5,42 @@
 <div class="days">
     <ul class="list-days d-flex flex-wrap p-0 ms-4 mt-4">
         <li class="ms-4 mt-2">
-            <a href="#" class="select-interval btn btn-outline-secondary w-100 active">
+            <a href="javascript:void(0)" class="select-interval active btn btn-outline-secondary w-100" id="today">
                 Сегодня
             </a>
         </li>
         <li class="ms-4 mt-2">
-            <a href="#" class="select-interval btn btn-outline-secondary w-100">
+            <a href="javascript:void(0)" class="select-interval btn btn-outline-secondary w-100" id="week">
                 Неделя
             </a>
         </li>
         <li class="ms-4 mt-2">
-            <a href="#" class="select-interval btn btn-outline-secondary w-100">
+            <a href="javascript:void(0)" class="select-interval btn btn-outline-secondary w-100" id="month">
                 Месяц
             </a>
         </li>
         <li class="ms-4 mt-2">
-            <a href="#" class="select-interval btn btn-outline-secondary w-100">
+            <a href="javascript:void(0)" class="select-interval btn btn-outline-secondary w-100" id="year">
                 Год
             </a>
         </li>
         <li class="ms-4 mt-2">
-            <a href="#" class="select-interval btn btn-outline-secondary w-100">
+            <a href="javascript:void(0)" class="select-interval btn btn-outline-secondary w-100" id="all-time">
                 Все
             </a>
         </li>
         <li class="ms-4 mt-2">
-            <a href="#" class="select-interval btn btn-outline-secondary w-100">
+            <a href="javascript:void(0)" class="select-interval btn btn-outline-secondary w-100" id="interval">
                 Интервал
             </a>
         </li>
         <li class="ms-4 mt-2 d-flex align-items-center justify-content-around">
             <span>c</span>
-            <a href="#" class="text-secondary">
-                Дата
-            </a>
+            <input type="date" class="input-date" placeholder="Дата" id="startDate" value="2024-11-19" min="2010-01-01" max="2030-12-31">
         </li>
         <li class="ms-4 mt-2 d-flex align-items-center justify-content-around">
             <span>по</span>
-            <a href="#" class="text-secondary">
-                Дата
-            </a>
+            <input type="date" class="input-date" placeholder="Дата" id="endDate" value="2024-11-19" min="2010-01-01" max="2030-12-31">
         </li>
     </ul>
 </div>

@@ -12,11 +12,9 @@ export class Operations {
         this.startDateInput = document.getElementById('startDate');
         this.endDateInput = document.getElementById('endDate');
 
-
         Layout.getBalance(this.openNewRoute).then();
 
         this.content();
-
 
         let date = null;
         const dateInterval = document.querySelectorAll('.select-interval');
@@ -40,8 +38,6 @@ export class Operations {
                             date = DateUtils.allTimeInterval();
                             break;
                         case 'interval':
-                            console.log('startDateInput',this.startDateInput)
-
                             date = DateUtils.selectInterval(this.startDateInput.value, this.endDateInput.value);
                             break;
                     }

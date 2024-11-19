@@ -1,25 +1,91 @@
 import {Layout} from "../layout";
+import {DateUtils} from "../../utils/date-utils";
+import {OperationsService} from "../service/operations-service";
 
 export class Dashboard {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
 
+        this.table = document.getElementById('dataTable');
+        this.startDateInput = document.getElementById('startDate');
+        this.endDateInput = document.getElementById('endDate');
+
         Layout.getBalance(this.openNewRoute).then();
 
-        this.showDiagram();
         this.content();
+
+        let date = null;
+        const dateInterval = document.querySelectorAll('.select-interval');
+        dateInterval.forEach(item => {
+            item.addEventListener('click', () => {
+                if (item.classList.contains('active')) {
+                    switch (item.id) {
+                        case 'today':
+                            date = DateUtils.today();
+                            break;
+                        case  'week':
+                            date = DateUtils.lastWeekInterval();
+                            break;
+                        case 'month':
+                            date = DateUtils.lastMothInterval();
+                            break;
+                        case 'year':
+                            date = DateUtils.lastYearInterval();
+                            break;
+                        case 'all-time':
+                            date = DateUtils.allTimeInterval();
+                            break;
+                        case 'interval':
+                            date = DateUtils.selectInterval(this.startDateInput.value, this.endDateInput.value);
+                            break;
+                    }
+                }
+                this.getData(date).then();
+            })
+        })
+
+        this.getData({dateFrom: new Date().toISOString().slice(0, 10), dateTo: new Date().toISOString().slice(0, 10)}).then();
     }
 
-    showDiagram() {
+    async getData(date) {
+        const interval = `?period=interval&dateFrom=${date.dateFrom}&dateTo=${date.dateTo}`;
+
+        const response = await OperationsService.getOperationWithFilter(interval);
+
+        if (response.error) {
+            return response.redirect ? this.openNewRoute(response.redirect) : null;
+        }
+
+        this.showDiagram(response.operations);
+    }
+
+
+
+    showDiagram(data) {
+
+        let incomeData = [];
+        let incomeDataName = [];
+        let expensesData = [];
+        let expensesDataName = [];
+
+        data.forEach(item => {
+            if (item.type === 'expense') {
+                expensesData.push(item.amount)
+                expensesDataName.push(item.category)
+            } else {
+                incomeData.push(item.amount)
+                incomeDataName.push(item.category)
+            }
+        })
+
         const incomeDiagram = document.getElementById('income-diagram');
-        let incomeData = [12, 19, 3, 5, 20, 3]
 
         new Chart(incomeDiagram, {
             type: 'pie',
             responsive: true,
             maintainAspectRatio: false,
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: incomeDataName,
                 datasets: [{
                     label: 'Временные данные',
                     data: incomeData,
@@ -42,13 +108,12 @@ export class Dashboard {
         });
 
         const expensesDiagram = document.getElementById('expenses-diagram');
-        const expensesData = [12, 19, 3, 5, 20, 3];
 
         new Chart(expensesDiagram, {
             type: 'pie',
             responsive: true,
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: expensesDataName,
                 datasets: [{
                     label: 'Временные данные',
                     data: expensesData,
