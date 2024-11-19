@@ -14,3 +14,7 @@
 .form {
     width: 421px;
 }
+
+.input-date:focus, textarea:focus, select:focus {
+    outline: none !important;
+}

@@ -1,6 +1,7 @@
 import {Layout} from "../layout";
 import {OperationsService} from "../service/operations-service";
-import {EDIT_OPERATION, ROUTE_OPERATIONS} from "../../../config/config";
+import {EDIT_OPERATION} from "../../../config/config";
+import {DateUtils} from "../../utils/date-utils";
 
 export class Operations {
     constructor(openNewRoute) {
@@ -8,21 +9,53 @@ export class Operations {
         this.openNewRoute = openNewRoute;
 
         this.table = document.getElementById('dataTable');
+        this.startDateInput = document.getElementById('startDate');
+        this.endDateInput = document.getElementById('endDate');
+
 
         Layout.getBalance(this.openNewRoute).then();
 
         this.content();
 
-        this.getData().then();
+
+        let date = null;
+        const dateInterval = document.querySelectorAll('.select-interval');
+        dateInterval.forEach(item => {
+            item.addEventListener('click', () => {
+                if (item.classList.contains('active')) {
+                    switch (item.id) {
+                        case 'today':
+                            date = DateUtils.today();
+                            break;
+                        case  'week':
+                            date = DateUtils.lastWeekInterval();
+                            break;
+                        case 'month':
+                            date = DateUtils.lastMothInterval();
+                            break;
+                        case 'year':
+                            date = DateUtils.lastYearInterval();
+                            break;
+                        case 'all-time':
+                            date = DateUtils.allTimeInterval();
+                            break;
+                        case 'interval':
+                            console.log('startDateInput',this.startDateInput)
+
+                            date = DateUtils.selectInterval(this.startDateInput.value, this.endDateInput.value);
+                            break;
+                    }
+                }
+                this.getData(date).then();
+            })
+        })
+
+        this.getData({dateFrom: new Date().toISOString().slice(0, 10), dateTo: new Date().toISOString().slice(0, 10)}).then();
     }
 
-    async getData() {
-        let dateFrom = new Date(new Date().getFullYear(), new Date().getMonth(), 2).toISOString().slice(0, 10);
-        console.log(dateFrom)
-        let dateTo = new Date().toISOString().slice(0, 10);
+    async getData(date) {
 
-        // const interval = `?period=interval&dateFrom=2022-09-12&dateTo=2022-09-13`;
-        const interval = `?period=interval&dateFrom=${dateFrom}&dateTo=${dateTo}`;
+        const interval = `?period=interval&dateFrom=${date.dateFrom}&dateTo=${date.dateTo}`;
 
         const response = await OperationsService.getOperationWithFilter(interval);
 
@@ -30,13 +63,14 @@ export class Operations {
             return response.redirect ? this.openNewRoute(response.redirect) : null;
         }
 
-        this.showTable(response.operations)
+        this.showTable(response.operations);
     }
 
     showTable(operations) {
+        this.table.innerHTML = '';
+
         operations.forEach((item, index) => {
             const dateFormat = new Date(item.date);
-
 
             let color = 'text-success';
             let typeValue = 'доход';
@@ -54,10 +88,8 @@ export class Operations {
                     <td>${dateFormat.toLocaleDateString('ru-RU')}</td>
                     <td>${item.comment}</td>
                     <td>
-                        <a href="">
-                            <img data-bs-toggle="modal" data-bs-target="#exampleModal" role="button"
-                                 src="../images/cart.png"
-                                 alt="Корзина">
+                        <a href="#" onclick="handler_delete_operation(this)" id="btn-${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModal" role="button">
+                            <img src="../images/cart.png" alt="Корзина">
                         </a>
                         
                         <a href="${EDIT_OPERATION}?id=${item.id}">

@@ -113,14 +113,14 @@ export class OperationsService {
         return returnObject;
     }
 
-    static async deleteIncome(id) {
+    static async deleteOperation(id) {
         const returnObject = {
             error: false,
             redirect: null,
             response: null,
         };
 
-        const result = await HttpUtils.request(DELETE_INCOME + '/' + id, DELETE, true);
+        const result = await HttpUtils.request(OPERATIONS + '/' + id, DELETE, true);
 
         if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
             returnObject.error = 'Ошибка при удалении операции';

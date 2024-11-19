@@ -43,6 +43,7 @@ export  const GET_CATEGORIES_EXPENSE = '/categories/expense';
 export  const GET_CATEGORIES_INCOME = '/categories/income';
 
 // operations
+export const OPERATIONS_DELETE = '/operations/delete';
 export const OPERATIONS = '/operations';
 
 export function handler(element) {

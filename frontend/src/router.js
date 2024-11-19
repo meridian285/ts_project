@@ -13,7 +13,7 @@ import {
     INCOME,
     INCOME_AND_EXPENSES, INCOME_EDIT,
     LOGIN,
-    LOGOUT, ROUTE_OPERATIONS,
+    LOGOUT, OPERATIONS_DELETE, ROUTE_OPERATIONS,
     SIGNUP
 } from "../config/config";
 import {CreateIncome} from "./components/income/createIncome";
@@ -25,6 +25,7 @@ import {CreateOperation} from "./components/income-and-expenses/create-operation
 import {EditIncomeAndExpenses, EditOperation} from "./components/income-and-expenses/edit-operation.js";
 import {FileUtils} from "./utils/file-utils";
 import {EditExpense} from "./components/expenses/editExpense";
+import {DeleteOperation} from "./components/income-and-expenses/delete-operation";
 
 export class Router {
     constructor() {
@@ -160,7 +161,7 @@ export class Router {
                 load: () => {
                     new Operations(this.openNewRoute.bind(this));
                 },
-                styles: ['income-and-expenses.css', 'dashboard.css'],
+                styles: ['operations.css', 'dashboard.css'],
                 scripts: ['menu.js'],
             },
             {
@@ -171,7 +172,7 @@ export class Router {
                 load: () => {
                     new CreateOperation(this.openNewRoute.bind(this));
                 },
-                styles: ['create-income-and-expenses.css'],
+                styles: ['create-operations.css'],
                 scripts: ['menu.js'],
             },
             {
@@ -182,8 +183,14 @@ export class Router {
                 load: () => {
                     new EditOperation(this.openNewRoute.bind(this));
                 },
-                styles: ['edit-income-and-expenses.css'],
+                styles: ['edit-operations.css'],
                 scripts: ['menu.js'],
+            },
+            {
+                route: OPERATIONS_DELETE,
+                load: () => {
+                    new DeleteOperation(this.openNewRoute.bind(this));
+                }
             },
         ];
     }
