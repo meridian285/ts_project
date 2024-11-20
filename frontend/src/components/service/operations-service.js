@@ -1,8 +1,6 @@
 import {HttpUtils} from "../../utils/http-utils";
 import {
     DELETE,
-    DELETE_INCOME,
-    GET_CATEGORIES_INCOME,
     OPERATIONS,
     POST,
     PUT

@@ -1,4 +1,4 @@
-import config, {HEADERS, POST, REFRESH} from "../../config/config";
+import config, {POST, REFRESH} from "../../config/config";
 
 export class AuthUtils {
     static accessTokenKey = 'accessToken';

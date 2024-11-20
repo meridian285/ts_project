@@ -7,11 +7,11 @@ import {Expenses} from "./components/expenses/expenses";
 import {Logout} from "./components/auth/logout";
 import {
     CREATE_EXPENSES,
-    CREATE_INCOME, CREATE_INCOME_AND_EXPENSES, CREATE_OPERATION, DELETE_EXPENSE, DELETE_INCOME, EDIT_EXPENSES,
-    EDIT_INCOME_AND_EXPENSES, EDIT_OPERATION,
+    CREATE_INCOME, CREATE_OPERATION, DELETE_EXPENSE, DELETE_INCOME, EDIT_EXPENSES,
+    EDIT_OPERATION,
     EXPENSES,
     INCOME,
-    INCOME_AND_EXPENSES, INCOME_EDIT,
+    INCOME_EDIT,
     LOGIN,
     LOGOUT, OPERATIONS_DELETE, ROUTE_OPERATIONS,
     SIGNUP
@@ -22,7 +22,7 @@ import {CreateExpense} from "./components/expenses/createExpense";
 import {DeleteIncome} from "./components/income/deleteIncome";
 import {DeleteExpense} from "./components/expenses/deleteExpense";
 import {CreateOperation} from "./components/income-and-expenses/create-operation";
-import {EditIncomeAndExpenses, EditOperation} from "./components/income-and-expenses/edit-operation.js";
+import {EditOperation} from "./components/income-and-expenses/edit-operation.js";
 import {FileUtils} from "./utils/file-utils";
 import {EditExpense} from "./components/expenses/editExpense";
 import {DeleteOperation} from "./components/income-and-expenses/delete-operation";
@@ -32,8 +32,6 @@ export class Router {
         this.titlePageElement = document.getElementById('title');
         this.contentPageElement = document.getElementById('content');
         this.bootstrapStylesElement = document.getElementById('bootstrap-styles');
-
-
 
         this.initEvents();
         this.routes = [
@@ -45,7 +43,6 @@ export class Router {
                 load: () => {
                     new Dashboard(this.openNewRoute.bind(this));
                 },
-                styles: ['dashboard.css'],
                 scripts: ['chart.js', 'menu.js'],
             },
             {
@@ -161,7 +158,7 @@ export class Router {
                 load: () => {
                     new Operations(this.openNewRoute.bind(this));
                 },
-                styles: ['operations.css', 'dashboard.css'],
+                styles: ['operations.css'],
                 scripts: ['menu.js'],
             },
             {
@@ -199,6 +196,75 @@ export class Router {
         window.addEventListener('DOMContentLoaded', this.activateRoute.bind(this));
         window.addEventListener('popstate', this.activateRoute.bind(this));
         document.addEventListener('click', this.clickHandler.bind(this));
+
+        const menuDropdownLinkElement = document.getElementById('menu-dropdown-link');
+        const arrowElement = document.getElementById('arrow');
+        const menuDropdown = document.querySelectorAll('.menu-dropdown-item');
+        const listMainMenu = document.querySelectorAll('.main-menu-item');
+        const selectInterval = document.querySelectorAll('.select-interval');
+        const categories = document.getElementById('categories');
+        const dropdownMenuElement = document.getElementById('dropdown-li');
+
+// Поворот стрелки при выборе меню аккордеона
+//         menuDropdownLinkElement.onclick = () => {
+//             if (!menuDropdownLinkElement.classList.contains('collapsed')) {
+//                 arrowElement.style.transform = 'rotate(90deg)';
+//             } else {
+//                 arrowElement.style.transform = 'rotate(0deg)';
+//             }
+//         };
+
+//Выбор пункта меню
+        menuDropdown.forEach(item => {
+            item.addEventListener('click', event => {
+                console.log(event.target)
+                if (event) {
+                    menuDropdown.forEach(items => items.classList.remove('active'));
+                    item.classList.add('active');
+                }
+            });
+        });
+
+// Меню аккордеон
+        listMainMenu.forEach(item => {
+            item.addEventListener('click', event => {
+                if (event) {
+                    listMainMenu.forEach(items => items.classList.remove('active'));
+                    item.classList.add('active');
+                }
+
+                if (event.target.id === 'menu-dropdown-link') {
+                    dropdownMenuElement.style.borderColor = '#0D6EFD';
+
+                    if (event.target.classList.contains('collapsed')) {
+                        event.target.style.borderBottomLeftRadius = '5px';
+                        event.target.style.borderBottomRightRadius = '5px';
+                    } else {
+                        event.target.style.borderBottomLeftRadius = '0';
+                        event.target.style.borderBottomRightRadius = '0';
+                    }
+
+                } else {
+                    dropdownMenuElement.style.borderColor = 'transparent';
+
+                    if (menuDropdownLinkElement.classList.contains('collapsed') && categories.classList.contains('show')) {
+                        arrowElement.style.transform = 'rotate(90deg)';
+                    } else {
+                        arrowElement.style.transform = 'rotate(0deg)';
+                    }
+                    categories.classList.remove('show');
+                }
+            });
+        });
+
+// Выбор временного интервала
+        selectInterval.forEach(item =>
+            item.addEventListener('click', event => {
+                if (event) {
+                    selectInterval.forEach(item => item.classList.remove('active'));
+                    item.classList.add('active');
+                }
+            }));
     }
 
     async openNewRoute(url) {

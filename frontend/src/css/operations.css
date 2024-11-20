@@ -15,6 +15,10 @@
     width: 421px;
 }
 
+.input-date {
+    outline: none;
+}
+
 .input-date:focus, textarea:focus, select:focus {
-    outline: none !important;
+    outline: none;
 }

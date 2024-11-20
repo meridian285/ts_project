@@ -4,7 +4,6 @@ import {IncomeService} from "../service/income-service";
 
 export class Income {
     constructor(openNewRoute) {
-        new Layout();
         this.openNewRoute = openNewRoute;
 
         Layout.getBalance(this.openNewRoute).then();

@@ -104,3 +104,11 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.input-date {
+    outline: none;
+}
+
+.input-date:focus, textarea:focus, select:focus {
+    outline: none;
+}

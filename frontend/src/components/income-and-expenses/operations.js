@@ -5,7 +5,6 @@ import {DateUtils} from "../../utils/date-utils";
 
 export class Operations {
     constructor(openNewRoute) {
-        new Layout();
         this.openNewRoute = openNewRoute;
 
         this.table = document.getElementById('dataTable');

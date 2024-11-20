@@ -10,6 +10,9 @@ export class Dashboard {
         this.startDateInput = document.getElementById('startDate');
         this.endDateInput = document.getElementById('endDate');
 
+        this.incomeDiagram = document.getElementById('income-diagram');
+        this.expensesDiagram = document.getElementById('expenses-diagram');
+
         Layout.getBalance(this.openNewRoute).then();
 
         this.content();
@@ -44,7 +47,10 @@ export class Dashboard {
             })
         })
 
-        this.getData({dateFrom: new Date().toISOString().slice(0, 10), dateTo: new Date().toISOString().slice(0, 10)}).then();
+        this.getData({
+            dateFrom: new Date().toISOString().slice(0, 10),
+            dateTo: new Date().toISOString().slice(0, 10)
+        }).then();
     }
 
     async getData(date) {
@@ -60,19 +66,15 @@ export class Dashboard {
     }
 
     clearCanvas(element) {
-        let ctx = element.getContext('2d');
-        ctx.clearRect(0, 0, element.width, element.height);
-        // ctx.fillStyle = '#ffffff';
-        // ctx.fillRect(0, 0, element.width, element.height);
+        if (Chart.getChart(element)) {
+            Chart.getChart(element).destroy();
+        }
     }
 
 
     showDiagram(data) {
-        const incomeDiagram = document.getElementById('income-diagram');
-        const expensesDiagram = document.getElementById('expenses-diagram');
-
-        this.clearCanvas(incomeDiagram);
-        this.clearCanvas(expensesDiagram);
+        this.clearCanvas(this.incomeDiagram);
+        this.clearCanvas(this.expensesDiagram);
 
         let incomeData = [];
         let incomeDataName = [];
@@ -80,7 +82,17 @@ export class Dashboard {
         let expensesData = [];
         let expensesDataName = [];
 
-        data.forEach(item => {
+        let newArray = [];
+        for (let i = 0; i < data.length; i++) {
+            if (newArray.length === 0 || !newArray.find(item => item.category === data[i].category)) {
+                newArray.push({type: data[i].type, category: data[i].category, amount: data[i].amount});
+            } else {
+                let count = newArray.find(item => item.category === data[i].category);
+                count.amount = count.amount + data[i].amount
+            }
+        }
+
+        newArray.forEach(item => {
             if (item.type === 'expense') {
                 expensesData.push(item.amount)
                 expensesDataName.push(item.category)
@@ -90,8 +102,7 @@ export class Dashboard {
             }
         })
 
-
-        new Chart(incomeDiagram, {
+        new Chart(this.incomeDiagram, {
             type: 'pie',
             responsive: true,
             maintainAspectRatio: false,
@@ -118,8 +129,7 @@ export class Dashboard {
             }
         });
 
-
-        new Chart(expensesDiagram, {
+        new Chart(this.expensesDiagram, {
             type: 'pie',
             responsive: true,
             data: {

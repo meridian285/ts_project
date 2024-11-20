@@ -7,7 +7,6 @@ import {ExpensesService} from "../service/expenses-service";
 
 export class Expenses {
     constructor(openNewRoute) {
-        new Layout();
         this.openNewRoute = openNewRoute;
 
         this.getCards().then();
