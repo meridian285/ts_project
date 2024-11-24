@@ -1,12 +1,9 @@
-import {Layout} from "../layout";
-import {EDIT_INCOME, GET_CATEGORIES_INCOME, INCOME_EDIT} from "../../../config/config";
+import {GET_CATEGORIES_INCOME, INCOME_EDIT} from "../../../config/config";
 import {IncomeService} from "../service/income-service";
 
 export class Income {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
-
-        Layout.getBalance(this.openNewRoute).then();
 
         this.getCards().then();
     }

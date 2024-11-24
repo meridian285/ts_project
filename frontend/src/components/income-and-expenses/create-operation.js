@@ -1,4 +1,3 @@
-import {Layout} from "../layout";
 import {IncomeService} from "../service/income-service";
 import {ExpensesService} from "../service/expenses-service";
 import {OperationsService} from "../service/operations-service";
@@ -14,9 +13,6 @@ export class CreateOperation {
         this.amountInputElement = document.getElementById('amount');
         this.dateInputElement = document.getElementById('start-date');
         this.commentInputElement = document.getElementById('comment');
-
-
-        Layout.getBalance(this.openNewRoute).then();
 
         if (this.typeSelectElement.value === 'expense') {
             this.getExpenses().then();

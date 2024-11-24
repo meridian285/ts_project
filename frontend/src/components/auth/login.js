@@ -32,9 +32,11 @@ export class Login {
         const that = this;
         this.fields.forEach(item => {
             item.element = document.getElementById(item.id);
-            item.element.addEventListener('change', (event) => {
-                that.validateField.call(that, item, event.target);
-            });
+            if (item.element) {
+                item.element.addEventListener('change', (event) => {
+                    that.validateField.call(that, item, event.target);
+                });
+            }
         })
 
         document.getElementById('process-button').addEventListener('click', this.login.bind(this));

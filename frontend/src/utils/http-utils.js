@@ -1,5 +1,6 @@
 import config, {GET, LOGIN} from "../../config/config";
 import {AuthUtils} from "./auth-utils";
+import {AuthService} from "../components/service/auth-service";
 
 export class HttpUtils {
     static async request(url, method = GET, useAuth = true, body = null) {
@@ -53,6 +54,6 @@ export class HttpUtils {
                 }
             }
         }
-        return  result;
+        return result;
     }
 }

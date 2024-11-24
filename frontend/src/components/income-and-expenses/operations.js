@@ -62,7 +62,9 @@ export class Operations {
     }
 
     showTable(operations) {
-        this.table.innerHTML = '';
+        if (this.table) {
+            this.table.innerHTML = '';
+        }
 
         operations.forEach((item, index) => {
             const dateFormat = new Date(item.date);
@@ -99,13 +101,15 @@ export class Operations {
     content() {
         const selectInterval = document.querySelectorAll('.select-interval');
         // Выбор временного интервала
-        selectInterval.forEach(item =>
-            item.addEventListener('click', event => {
-                if (event) {
-                    selectInterval.forEach(item => item.classList.remove('active'));
-                    item.classList.add('active');
-                }
-            })
-        )
+        if (selectInterval) {
+            selectInterval.forEach(item =>
+                item.addEventListener('click', event => {
+                    if (event) {
+                        selectInterval.forEach(item => item.classList.remove('active'));
+                        item.classList.add('active');
+                    }
+                })
+            )
+        }
     }
 }

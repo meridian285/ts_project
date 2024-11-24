@@ -60,7 +60,7 @@ export class OperationsService {
         if (result.redirect || result.error || !result.response && (result.response && (result.response.error || !result.response))) {
             returnObject.error = 'Ошибка при запросе операции';
             if (result.redirect) {
-                return returnObject.redirect = result.redirect;
+                returnObject.redirect = result.redirect;
             }
             return returnObject;
         }
