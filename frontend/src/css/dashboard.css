@@ -106,9 +106,17 @@
 }
 
 .input-date {
+    margin-right: 10px;
+    border: none;
     outline: none;
 }
 
 .input-date:focus, textarea:focus, select:focus {
     outline: none;
 }
+
+.pretext-date {
+    padding-left: 10px;
+    padding-right: 5px;
+}
+

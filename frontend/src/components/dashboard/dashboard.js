@@ -1,7 +1,5 @@
-import {Layout} from "../layout";
 import {DateUtils} from "../../utils/date-utils";
 import {OperationsService} from "../service/operations-service";
-import {AuthService} from "../service/auth-service";
 
 export class Dashboard {
     constructor(openNewRoute) {
@@ -109,7 +107,7 @@ export class Dashboard {
             data: {
                 labels: incomeDataName,
                 datasets: [{
-                    label: 'Временные данные',
+                    // label: 'Временные данные',
                     data: incomeData,
                     borderWidth: 1
                 }]
@@ -135,7 +133,7 @@ export class Dashboard {
             data: {
                 labels: expensesDataName,
                 datasets: [{
-                    label: 'Временные данные',
+                    // label: 'Временные данные',
                     data: expensesData,
                     borderWidth: 1
                 }]
@@ -209,15 +207,14 @@ export class Dashboard {
         // Меню аккордеон
         listMainMenu.forEach(item => {
             item.addEventListener('click', event => {
-                if (event) {
-                    listMainMenu.forEach(items => items.classList.remove('active'));
-                    item.classList.add('active');
-                }
+
+                listMainMenu.forEach(items => items.classList.remove('active'));
+                item.classList.add('active');
 
                 if (event.target.id === 'menu-dropdown-link') {
                     dropdownMenuElement.style.borderColor = '#0D6EFD';
 
-                    if (event.target.classList.contains('collapsed')) {
+                    if (event.target.classList.contains('collapse')) {
                         event.target.style.borderBottomLeftRadius = '5px';
                         event.target.style.borderBottomRightRadius = '5px';
                     } else {
