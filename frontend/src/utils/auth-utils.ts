@@ -1,25 +1,31 @@
-import config, {POST, REFRESH} from "../../config/config";
+import config, {HEADERS, POST, REFRESH} from "../../config/config";
+import {UserInfoType} from "../types/tokens.type";
+import {ApiEnum} from "../types/api.enum";
 
 export class AuthUtils {
-    static accessTokenKey = 'accessToken';
-    static refreshTokenKey = 'refreshToken';
-    static userInfoKey = 'userInfo';
+    static accessTokenKey: string = 'accessToken';
+    static refreshTokenKey: string = 'refreshToken';
+    static userInfoKey: string = 'userInfo';
 
-    static setAuthInfo(accessToken, refreshToken, userInfo = null) {
-        localStorage.setItem(this.accessTokenKey, accessToken);
-        localStorage.setItem(this.refreshTokenKey, refreshToken);
+    public static setAuthInfo(accessToken: string | null, refreshToken: string | null, userInfo: UserInfoType | null = null): void {
+        if (accessToken) {
+            localStorage.setItem(this.accessTokenKey, accessToken);
+        }
+        if (refreshToken) {
+            localStorage.setItem(this.refreshTokenKey, refreshToken);
+        }
         if (userInfo) {
             localStorage.setItem(this.userInfoKey, JSON.stringify(userInfo));
         }
     }
 
-    static removeAuthInfo() {
+    public static removeAuthInfo(): void {
         localStorage.removeItem(this.accessTokenKey);
         localStorage.removeItem(this.refreshTokenKey);
         localStorage.removeItem(this.userInfoKey);
     }
 
-    static getAuthInfo(key = null) {
+    public static getAuthInfo(key:string | null = null){
         if (key && [this.accessTokenKey, this.refreshTokenKey, this.userInfoKey].includes(key)) {
             return localStorage.getItem(key);
         } else {
@@ -31,16 +37,13 @@ export class AuthUtils {
         }
     }
 
-    static async updateRefreshToken() {
-        let result = false;
+    public static async updateRefreshToken(): Promise<boolean> {
+        let result: boolean = false;
         const refreshToken = this.getAuthInfo(this.refreshTokenKey);
         if (refreshToken) {
-            const response = await fetch(config.api + REFRESH, {
+            const response: Response = await fetch(config.api + ApiEnum.REFRESH, {
                 method: POST,
-                headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
-                },
+                headers: HEADERS,
                 body: JSON.stringify({refreshToken: refreshToken})
             });
             if (response && response.status === 200) {

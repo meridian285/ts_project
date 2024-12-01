@@ -1,9 +1,10 @@
 import config, {GET, LOGIN} from "../../config/config";
 import {AuthUtils} from "./auth-utils";
 import {AuthService} from "../components/service/auth-service";
+import {MethodEnum} from "../types/method-enum";
 
 export class HttpUtils {
-    static async request(url, method = GET, useAuth = true, body = null) {
+    public static async request(url:string, method = MethodEnum.GET, useAuth:boolean = true, body = null) {
 
         const result = {
             error: false,

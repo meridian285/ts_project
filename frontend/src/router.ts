@@ -26,8 +26,15 @@ import {EditOperation} from "./components/income-and-expenses/edit-operation.js"
 import {FileUtils} from "./utils/file-utils";
 import {EditExpense} from "./components/expenses/editExpense";
 import {DeleteOperation} from "./components/income-and-expenses/delete-operation";
+import {RouteType} from "./types/route.type";
+import {ApiEnum} from "./types/api.enum";
 
 export class Router {
+    private titlePageElement: HTMLElement | null = null;
+    private contentPageElement: HTMLElement | null = null;
+    readonly bootstrapStylesElement: HTMLElement | null = null;
+    private routes: RouteType[];
+
     constructor() {
         this.titlePageElement = document.getElementById('title');
         this.contentPageElement = document.getElementById('content');
@@ -46,7 +53,7 @@ export class Router {
                 scripts: ['chart.js', 'menu.js'],
             },
             {
-                route: LOGIN,
+                route: '/login',
                 title: 'Авторизация',
                 filePathTemplate: '/templates/pages/auth/login.html',
                 useLayout: false,
@@ -56,7 +63,7 @@ export class Router {
                 styles: ['auth.css'],
             },
             {
-                route: SIGNUP,
+                route: ApiEnum.SIGNUP,
                 title: 'Регистрация',
                 filePathTemplate: '/templates/pages/auth/signup.html',
                 useLayout: false,
@@ -66,13 +73,13 @@ export class Router {
                 styles: ['auth.css'],
             },
             {
-                route: LOGOUT,
+                route: ApiEnum.LOGOUT,
                 load: () => {
                     new Logout(this.openNewRoute.bind(this));
                 }
             },
             {
-                route: EXPENSES,
+                route: ApiEnum.EXPENSES,
                 title: 'Расходы',
                 filePathTemplate: '/templates/pages/expenses/expenses.html',
                 useLayout: '/templates/layout.html',
@@ -80,11 +87,11 @@ export class Router {
                     new Expenses(this.openNewRoute.bind(this));
                 },
                 styles: ['expenses.css'],
-                scripts: ['delete_action.js', 'menu.js'],
+                scripts: ['menu.js'],
             },
 
             {
-                route: CREATE_EXPENSES,
+                route: ApiEnum.CREATE_EXPENSES,
                 title: 'Создание категории расходов',
                 filePathTemplate: '/templates/pages/expenses/create-expenses.html',
                 useLayout: '/templates/layout.html',
@@ -95,7 +102,7 @@ export class Router {
                 scripts: ['menu.js'],
             },
             {
-                route: EDIT_EXPENSES,
+                route: ApiEnum.EDIT_EXPENSES,
                 title: 'Редактирование категории расходов',
                 filePathTemplate: '/templates/pages/expenses/edit-expenses.html',
                 useLayout: '/templates/layout.html',
@@ -106,13 +113,13 @@ export class Router {
                 scripts: ['menu.js'],
             },
             {
-                route: DELETE_EXPENSE,
+                route: ApiEnum.DELETE_EXPENSE,
                 load: () => {
                     new DeleteExpense(this.openNewRoute.bind(this));
                 }
             },
             {
-                route: INCOME,
+                route: ApiEnum.INCOME,
                 title: 'Доходы',
                 filePathTemplate: '/templates/pages/income/income.html',
                 useLayout: '/templates/layout.html',
@@ -123,7 +130,7 @@ export class Router {
                 scripts: ['delete_action.js', 'menu.js'],
             },
             {
-                route: CREATE_INCOME,
+                route: ApiEnum.CREATE_INCOME,
                 title: 'Создание категории доходов',
                 filePathTemplate: '/templates/pages/income/create-income.html',
                 useLayout: '/templates/layout.html',
@@ -134,7 +141,7 @@ export class Router {
                 scripts: ['menu.js'],
             },
             {
-                route: INCOME_EDIT,
+                route: ApiEnum.INCOME_EDIT,
                 title: 'Редактирование категории доходов',
                 filePathTemplate: '/templates/pages/income/edit-income.html',
                 useLayout: '/templates/layout.html',
@@ -145,13 +152,13 @@ export class Router {
                 scripts: ['menu.js'],
             },
             {
-                route: DELETE_INCOME,
+                route: ApiEnum.DELETE_INCOME,
                 load: () => {
                     new DeleteIncome(this.openNewRoute.bind(this));
                 }
             },
             {
-                route: ROUTE_OPERATIONS,
+                route: ApiEnum.ROUTE_OPERATIONS,
                 title: 'Доходы и расходы',
                 filePathTemplate: '/templates/pages/income-and-expenses/operations.html',
                 useLayout: '/templates/layout.html',
@@ -162,7 +169,7 @@ export class Router {
                 scripts: ['menu.js'],
             },
             {
-                route: CREATE_OPERATION,
+                route: ApiEnum.CREATE_OPERATION,
                 title: 'Создание дохода/расхода',
                 filePathTemplate: '/templates/pages/income-and-expenses/create-operations.html',
                 useLayout: '/templates/layout.html',
@@ -173,7 +180,7 @@ export class Router {
                 scripts: ['menu.js'],
             },
             {
-                route: EDIT_OPERATION,
+                route: ApiEnum.EDIT_OPERATION,
                 title: 'Редактирование дохода/расхода',
                 filePathTemplate: '/templates/pages/income-and-expenses/edit-operations.html',
                 useLayout: '/templates/layout.html',
@@ -184,7 +191,7 @@ export class Router {
                 scripts: ['menu.js'],
             },
             {
-                route: OPERATIONS_DELETE,
+                route: ApiEnum.OPERATIONS_DELETE,
                 load: () => {
                     new DeleteOperation(this.openNewRoute.bind(this));
                 }
@@ -192,21 +199,23 @@ export class Router {
         ];
     }
 
-    initEvents() {
+    private initEvents(): void {
         window.addEventListener('DOMContentLoaded', this.activateRoute.bind(this));
         window.addEventListener('popstate', this.activateRoute.bind(this));
         document.addEventListener('click', this.clickHandler.bind(this));
     }
 
-    async openNewRoute(url) {
-        const currentRout = window.location.pathname;
-        history.pushState({}, '', url)
-        await this.activateRoute(null, currentRout)
+    private async openNewRoute(url: ApiEnum): Promise<void> {
+        const currentRout: string = window.location.pathname;
+        const unused: string = '';
+        const obj: any = {};
+        history.pushState(obj, unused, url);
+        await this.activateRoute(null, currentRout);
     }
 
-    async clickHandler(e) {
-        let element = null;
-        if (e.target.nodeName === 'A') {
+    private async clickHandler(e: any): Promise<void> {
+        let element: HTMLLinkElement | null = null;
+        if ((e.target as HTMLElement).nodeName  === 'A') {
             element = e.target;
         } else if (e.target.parentNode.nodeName === 'A') {
             element = e.target.parentNode;
@@ -215,7 +224,7 @@ export class Router {
         if (element) {
             e.preventDefault();
 
-            const url = element.href.replace(window.location.origin, '');
+            const url: string = element.href.replace(window.location.origin, '');
             if (!url || url === '/#' || url.startsWith('javascript:void(0)')) {
                 return
             }
@@ -224,9 +233,9 @@ export class Router {
         }
     }
 
-    async activateRoute(e, oldRoute = null) {
+    private async activateRoute(e: any, oldRoute: string | null = null): Promise<void> {
         if (oldRoute) {
-            const currentRoute = this.routes.find(item => item.route === oldRoute);
+            const currentRoute: RouteType | undefined = this.routes.find(item => item.route === oldRoute);
 
             if (currentRoute.scripts && currentRoute.scripts.length > 0) {
                 currentRoute.scripts.forEach(script => {
@@ -240,14 +249,14 @@ export class Router {
             }
         }
 
-        const urlRout = window.location.pathname;
-        const newRoute = this.routes.find(item => item.route === urlRout);
+        const urlRout: string = window.location.pathname;
+        const newRoute: RouteType | undefined = this.routes.find(item => item.route === urlRout);
 
 
         if (newRoute) {
             if (newRoute.styles && newRoute.styles.length > 0) {
                 newRoute.styles.forEach(style => {
-                    const link = document.createElement('link');
+                    const link: HTMLLinkElement = document.createElement('link');
                     link.rel = 'stylesheet';
                     link.href = `/css/${style}`;
                     document.head.insertBefore(link, this.bootstrapStylesElement);
@@ -270,7 +279,7 @@ export class Router {
                     const contentLayoutPageElement = document.getElementById('content-layout');
                     if (!contentLayoutPageElement) {
                         this.contentPageElement.innerHTML = await fetch(newRoute.useLayout).then(response => response.text());
-                        const contentLayoutPageElement = document.getElementById('content-layout');
+                        const contentLayoutPageElement: HTMLElement | null = document.getElementById('content-layout');
                         contentLayoutPageElement.innerHTML = await fetch(newRoute.filePathTemplate).then(response => response.text());
                     } else {
                         contentLayoutPageElement.innerHTML = await fetch(newRoute.filePathTemplate).then(response => response.text());

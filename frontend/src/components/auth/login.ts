@@ -1,10 +1,15 @@
 import {AuthUtils} from "../../utils/auth-utils";
-import {LOGIN, POST} from "../../../config/config";
-import {HttpUtils} from "../../utils/http-utils";
 import {AuthService} from "../service/auth-service";
+import {FieldsInputType} from "../../types/fields-input.type";
 
 export class Login {
-    constructor(openNewRoute) {
+    readonly openNewRoute: any;
+    private rememberMeElement: HTMLInputElement | null;
+    private commonErrorElement: HTMLElement | null;
+    private fields: FieldsInputType[];
+    private processButton: HTMLElement | null;
+
+    constructor(openNewRoute: any) {
         this.openNewRoute = openNewRoute;
 
         if (AuthUtils.getAuthInfo(AuthUtils.accessTokenKey)) {
@@ -13,6 +18,7 @@ export class Login {
 
         this.rememberMeElement = document.getElementById('rememberMeChecked');
         this.commonErrorElement = document.getElementById('common-error');
+        this.processButton = document.getElementById('process-button')
 
         this.fields = [
             {
@@ -29,8 +35,8 @@ export class Login {
                 valid: false,
             }
         ];
-        const that = this;
-        this.fields.forEach(item => {
+        const that = Login;
+        this.fields.forEach((item: FieldsInputType) => {
             item.element = document.getElementById(item.id);
             if (item.element) {
                 item.element.addEventListener('change', (event) => {
@@ -39,10 +45,12 @@ export class Login {
             }
         })
 
-        document.getElementById('process-button').addEventListener('click', this.login.bind(this));
+        if (this.processButton) {
+            this.processButton.addEventListener('click', this.login.bind(this));
+        }
     }
 
-    validateField(field, element) {
+    private validateField(field: FieldsInputType, element: HTMLInputElement): boolean  {
         if (!element.value || !element.value.match(field.regex)) {
             element.classList.add('is-invalid');
             field.valid = false;
@@ -54,11 +62,13 @@ export class Login {
         return field.valid;
     }
 
-    async login() {
-        this.commonErrorElement.style.display = 'none';
+    private async login(): Promise<any> {
+        if (this.commonErrorElement) {
+            this.commonErrorElement.style.display = 'none';
+        }
         if (this.validateField) {
 
-            const loginResult = await AuthService.logIn({
+            const loginResult: Response = await AuthService.logIn({
                 email: this.fields.find( field => field.id === 'emailInput').element.value,
                     password: this.fields.find( field => field.id === 'passwordInput').element.value,
                     rememberMe: this.rememberMeElement.checked,

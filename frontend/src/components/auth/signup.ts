@@ -2,8 +2,20 @@ import {LOGIN, POST, SIGNUP} from "../../../config/config";
 import {AuthUtils} from "../../utils/auth-utils";
 import {HttpUtils} from "../../utils/http-utils";
 import {AuthService} from "../service/auth-service";
+import {FieldsInputType} from "../../types/fields-input.type";
+import {ApiEnum} from "../../types/api.enum";
 
 export class SignUp {
+    readonly fullNameElement: HTMLElement | null = null;
+    readonly emailElement: HTMLElement | null = null;
+    readonly passwordElement: HTMLElement | null = null;
+    readonly repeatPasswordElement: HTMLElement | null = null;
+    readonly commonErrorElement: HTMLElement | null = null;
+    private fields: FieldsInputType[] | null = null
+    readonly form: HTMLElement | null = null;
+    private processButton: HTMLElement | null = null;
+    private openNewRoute: ApiEnum;
+
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
 
@@ -11,13 +23,17 @@ export class SignUp {
             return this.openNewRoute('/');
         }
 
-        document.getElementById('form').reset();
+        this.form = document.getElementById('form');
+        if (this.form) {
+            this.form.reset();
+        }
 
         this.fullNameElement = document.getElementById('fullNameInput');
         this.emailElement = document.getElementById('emailInput');
         this.passwordElement = document.getElementById('passwordInput');
         this.repeatPasswordElement = document.getElementById('repeatPasswordInput');
         this.commonErrorElement = document.getElementById('common-error');
+        this.processButton = document.getElementById('process-button')
 
         this.fields = [
             {
@@ -57,11 +73,13 @@ export class SignUp {
             });
         });
 
-        document.getElementById('process-button').addEventListener('click', this.signUp.bind(this));
+        if (this.processButton) {
+            this.processButton.addEventListener('click', this.signUp.bind(this));
+        }
 
     }
 
-    validateField(field, element) {
+    private validateField(field, element): boolean {
         if (field.id === 'fullNameInput') {
             element.addEventListener('input', function () {
                 element.value = element.value.replace(/([0-9])/g, '');
@@ -108,24 +126,29 @@ export class SignUp {
         return field.valid;
     }
 
-    async signUp() {
-        this.commonErrorElement.style.display = 'none';
-        const arrayName = this.fullNameElement.value.split(' ');
+    async signUp(): Promise<any> {
+        if (this.commonErrorElement) {
+            this.commonErrorElement.style.display = 'none';
+        }
+
+        const arrayName: string[] | null = this.fullNameElement ? this.fullNameElement.value.split(' ') : null;
         if (this.validateField) {
 
             const signUpResult = await AuthService.signUp({
-                name: arrayName[0],
-                lastName: arrayName[1],
-                email: this.emailElement.value,
-                password: this.passwordElement.value,
-                passwordRepeat: this.repeatPasswordElement.value,
+                name: arrayName ? arrayName[0] : null,
+                lastName: arrayName ? arrayName[1] : null,
+                email: this.emailElement ? this.emailElement.value : null,
+                password: this.passwordElement ? this.passwordElement.value : null,
+                passwordRepeat: this.repeatPasswordElement ? this.repeatPasswordElement.value : null,
             });
 
             if (signUpResult) {
                 return this.openNewRoute(LOGIN);
             }
 
-            this.commonErrorElement.style.display = 'block';
+            if (this.commonErrorElement) {
+                this.commonErrorElement.style.display = 'block';
+            }
         }
     }
 }

@@ -1,8 +1,9 @@
 import {Router} from "./router";
 
 class App {
+    private router: Router;
     constructor() {
-        new Router();
+        this.router = new Router();
     }
 }
 

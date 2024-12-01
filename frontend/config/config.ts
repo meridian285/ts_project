@@ -46,7 +46,3 @@ export  const GET_CATEGORIES_INCOME = '/categories/income';
 export const OPERATIONS_DELETE = '/operations/delete';
 export const OPERATIONS = '/operations';
 
-export function handler(element) {
-    const id = element.id.replace(/[^0-9]/g,"")
-    document.getElementById('delete-btn').href = DELETE_INCOME + '?id=' + id;
-}

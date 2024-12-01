@@ -1,12 +1,14 @@
 import {HttpUtils} from "../../utils/http-utils";
-import {LOGIN, LOGOUT, POST, SIGNUP} from "../../../config/config";
+import {LoginDataType} from "../../types/login-data.type";
+import {MethodEnum} from "../../types/method-enum";
+import {ApiEnum} from "../../types/api.enum";
 
 export class AuthService {
 
     static isTokenRefreshing = true;
 
-    static async logIn(data) {
-        const result = await HttpUtils.request(LOGIN, POST, false, data);
+    public static async logIn(data: LoginDataType): Promise<any> {
+        const result = await HttpUtils.request(ApiEnum.LOGIN, MethodEnum.POST, false, data);
 
         if (result.error || !result.response || (result.response && (!result.response.tokens.accessToken ||
             !result.response.tokens.refreshToken || !result.response.user.id || !result.response.user.name))) {
@@ -15,10 +17,10 @@ export class AuthService {
         return result.response;
     }
 
-    static async signUp(data) {
+    public static async signUp(data): Promise<any> {
         this.isTokenRefreshing = false;
 
-        const result = await HttpUtils.request(SIGNUP, POST, false, data);
+        const result = await HttpUtils.request(ApiEnum.SIGNUP, MethodEnum.POST, false, data);
 
         if (result.error || !result.response || (result.response && (!result.response.user.id ||
             !result.response.user.email || !result.response.user.name || !result.response.user.lastName))) {
@@ -31,6 +33,6 @@ export class AuthService {
     }
 
     static async logOut(data) {
-        await HttpUtils.request(LOGOUT, POST, false, data);
+        await HttpUtils.request(ApiEnum.LOGOUT, MethodEnum.POST, false, data);
     }
 }
